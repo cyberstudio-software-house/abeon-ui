@@ -1,11 +1,18 @@
 import type { Config } from "tailwindcss";
 import path from "path";
 
+let _contentPaths: string[] = [];
+try {
+  _contentPaths = [
+    path.join(path.dirname(require.resolve("@cyberstudio-software-house/ui")), "**/*.{js,mjs,cjs}"),
+  ];
+} catch {
+  // Not resolvable when building the package itself (e.g. Storybook build)
+}
+
 const preset: Config = {
   darkMode: ["class"],
-  content: [
-    path.join(path.dirname(require.resolve("@cyberstudio-software-house/ui")), "**/*.{js,mjs,cjs}"),
-  ],
+  content: _contentPaths,
   theme: {
     container: {
       center: true,
