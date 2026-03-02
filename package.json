@@ -1,5 +1,5 @@
 {
-  "name": "@abeon/ui",
+  "name": "@cyberstudio-software-house/ui",
   "version": "1.0.0",
   "description": "Abeon Design System — shadcn/ui components, CSS tokens, and Tailwind preset",
   "type": "module",
@@ -107,6 +107,6 @@
     "url": "https://github.com/abeon/abeon-ui.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://npm.pkg.github.com/cyberstudio-software-house"
   }
 }

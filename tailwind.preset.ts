@@ -4,7 +4,7 @@ import path from "path";
 const preset: Config = {
   darkMode: ["class"],
   content: [
-    path.join(path.dirname(require.resolve("@abeon/ui")), "**/*.{js,mjs,cjs}"),
+    path.join(path.dirname(require.resolve("@cyberstudio-software-house/ui")), "**/*.{js,mjs,cjs}"),
   ],
   theme: {
     container: {
