@@ -1,1 +1,127 @@
-/* CSS custom properties — populated in Plan 02-02 */
+:root {
+  --background: 220 20% 97%;
+  --background-subtle: 220 15% 95%;
+  --surface: 0 0% 100%;
+  --surface-elevated: 0 0% 100%;
+
+  --foreground: 220 25% 10%;
+  --foreground-secondary: 220 15% 35%;
+  --foreground-muted: 220 10% 55%;
+  --foreground-placeholder: 220 10% 65%;
+
+  --border: 220 15% 90%;
+  --border-strong: 220 15% 82%;
+  --border-focus: 220 70% 50%;
+
+  --primary: 220 70% 50%;
+  --primary-hover: 220 70% 45%;
+  --primary-active: 220 70% 40%;
+  --primary-foreground: 0 0% 100%;
+  --primary-muted: 220 70% 96%;
+  --primary-muted-foreground: 220 70% 40%;
+
+  --secondary: 220 15% 94%;
+  --secondary-hover: 220 15% 90%;
+  --secondary-foreground: 220 25% 20%;
+
+  --muted: 220 15% 95%;
+  --muted-foreground: 220 10% 45%;
+
+  --accent: 220 15% 94%;
+  --accent-foreground: 220 25% 20%;
+
+  --success: 152 60% 40%;
+  --success-foreground: 0 0% 100%;
+  --success-muted: 152 60% 95%;
+  --success-muted-foreground: 152 60% 30%;
+
+  --warning: 38 95% 50%;
+  --warning-foreground: 38 95% 15%;
+  --warning-muted: 38 95% 95%;
+  --warning-muted-foreground: 38 95% 35%;
+
+  --danger: 0 72% 51%;
+  --danger-foreground: 0 0% 100%;
+  --danger-muted: 0 72% 97%;
+  --danger-muted-foreground: 0 72% 40%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --input: 220 15% 90%;
+  --ring: 220 70% 50%;
+  --radius: 0.625rem;
+
+  --card: 0 0% 100%;
+  --card-foreground: 220 25% 10%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 25% 10%;
+
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 220 15% 35%;
+  --sidebar-primary: 220 70% 50%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 220 15% 96%;
+  --sidebar-accent-foreground: 220 25% 15%;
+  --sidebar-border: 220 15% 92%;
+  --sidebar-ring: 220 70% 50%;
+  --sidebar-muted: 220 10% 55%;
+
+  --chart-1: 220 70% 50%;
+  --chart-2: 152 60% 40%;
+  --chart-3: 38 95% 50%;
+  --chart-4: 280 65% 50%;
+  --chart-5: 340 75% 55%;
+}
+
+.dark {
+  --background: 220 25% 8%;
+  --background-subtle: 220 25% 10%;
+  --surface: 220 25% 12%;
+  --surface-elevated: 220 25% 14%;
+
+  --foreground: 220 15% 95%;
+  --foreground-secondary: 220 10% 70%;
+  --foreground-muted: 220 10% 50%;
+  --foreground-placeholder: 220 10% 40%;
+
+  --border: 220 20% 20%;
+  --border-strong: 220 20% 28%;
+  --border-focus: 220 70% 55%;
+
+  --primary: 220 70% 55%;
+  --primary-hover: 220 70% 60%;
+  --primary-active: 220 70% 50%;
+  --primary-foreground: 0 0% 100%;
+  --primary-muted: 220 50% 15%;
+  --primary-muted-foreground: 220 70% 70%;
+
+  --secondary: 220 20% 18%;
+  --secondary-hover: 220 20% 22%;
+  --secondary-foreground: 220 15% 90%;
+
+  --muted: 220 20% 15%;
+  --muted-foreground: 220 10% 60%;
+
+  --accent: 220 20% 18%;
+  --accent-foreground: 220 15% 90%;
+
+  --success-muted: 152 40% 15%;
+  --warning-muted: 38 60% 15%;
+  --danger-muted: 0 50% 15%;
+
+  --input: 220 20% 20%;
+  --ring: 220 70% 55%;
+
+  --card: 220 25% 12%;
+  --card-foreground: 220 15% 95%;
+
+  --popover: 220 25% 12%;
+  --popover-foreground: 220 15% 95%;
+
+  --sidebar-background: 220 25% 10%;
+  --sidebar-foreground: 220 10% 70%;
+  --sidebar-accent: 220 25% 15%;
+  --sidebar-border: 220 20% 18%;
+}
