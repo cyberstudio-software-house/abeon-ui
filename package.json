@@ -19,7 +19,7 @@
     },
     "./dist/tokens.css": "./dist/tokens.css",
     "./tailwind.preset": {
-      "types": "./dist/tailwind.preset.d.ts",
+      "types": "./dist/tailwind.preset.d.cts",
       "default": "./dist/tailwind.preset.js"
     }
   },
