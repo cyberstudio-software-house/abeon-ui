@@ -54,3 +54,29 @@ export { Toggle, toggleVariants } from "./components/toggle";
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./components/tooltip";
 export { useToast, toast } from "./components/use-toast";
 export { cn } from "./lib/utils";
+
+export { AppShell } from "./components/layout/app-shell";
+export type { AppShellProps } from "./components/layout/app-shell";
+
+export { AppSidebar } from "./components/layout/app-sidebar";
+export type { AppSidebarProps, NavItem, NavGroup } from "./components/layout/app-sidebar";
+
+export { Topbar } from "./components/layout/topbar";
+export type { TopbarProps, TopbarUser } from "./components/layout/topbar";
+
+export { PageLayout } from "./components/layout/page-layout";
+export type { PageLayoutProps } from "./components/layout/page-layout";
+
+export { ContentArea } from "./components/layout/content-area";
+export type { ContentAreaProps } from "./components/layout/content-area";
+
+export { AppSwitcher } from "./components/composite/app-switcher";
+export type { AppSwitcherProps } from "./components/composite/app-switcher";
+
+export { NotificationCenter } from "./components/composite/notification-center";
+export type { NotificationCenterProps } from "./components/composite/notification-center";
+
+export { useSidebarCollapsed } from "./lib/use-sidebar-collapsed";
+
+export type { AppManifest, AppCategory } from "./types/app-manifest";
+export type { NotificationItem, NotificationColorVariant } from "./types/notification-item";
