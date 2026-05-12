@@ -364,7 +364,7 @@ export function RichTextEditor({
     editorProps: {
       attributes: {
         class: cn(
-          "prose dark:prose-invert max-w-none focus:outline-none",
+          "prose dark:prose-invert max-w-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 rounded-sm",
           "prose-headings:font-semibold prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-base",
           "prose-p:my-2 prose-li:my-0.5 prose-p:leading-relaxed",
           "prose-table:border-collapse prose-td:border prose-td:border-border prose-td:p-2 prose-th:border prose-th:border-border prose-th:p-2 prose-th:bg-muted/50",

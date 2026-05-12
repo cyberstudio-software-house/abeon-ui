@@ -137,7 +137,7 @@ export function Topbar({
                 placeholder="Szukaj..."
                 value={searchQuery}
                 onChange={handleSearchChange}
-                className="flex-1 bg-transparent py-3 px-3 text-sm placeholder:text-muted-foreground focus:outline-none"
+                className="flex-1 bg-transparent py-3 px-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset rounded-sm"
                 autoFocus
                 onKeyDown={(e) => {
                   if (e.key === "Escape") setSearchOpen(false);
@@ -170,7 +170,7 @@ export function Topbar({
                 type="text"
                 placeholder="Szukaj..."
                 onChange={(e) => onSearch?.(e.target.value)}
-                className="flex-1 bg-transparent py-3 px-3 text-sm placeholder:text-muted-foreground focus:outline-none"
+                className="flex-1 bg-transparent py-3 px-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset rounded-sm"
                 autoFocus
               />
             </div>

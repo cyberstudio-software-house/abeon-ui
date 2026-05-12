@@ -25,7 +25,7 @@ function Chip({ className, children, onRemove, variant = "default", ...props }: 
             e.stopPropagation();
             onRemove();
           }}
-          className="ml-0.5 rounded hover:bg-foreground/10 p-0.5 transition-colors focus:outline-none focus:ring-1 focus:ring-ring"
+          className="ml-0.5 rounded hover:bg-foreground/10 p-0.5 transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           <X className="h-3 w-3" />
         </button>
