@@ -5,6 +5,14 @@ export { AspectRatio } from "./components/aspect-ratio";
 export { Avatar, AvatarFallback, AvatarImage } from "./components/avatar";
 export { Badge, StatusBadge, badgeVariants } from "./components/badge";
 export { Breadcrumb, BreadcrumbEllipsis, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "./components/breadcrumb";
+export { BlockRenderer, createBlockRegistry } from "./components/block-renderer";
+export type {
+  BlockBase,
+  BlockView,
+  BlockViewProps,
+  BlockRegistry,
+  BlockRendererProps,
+} from "./components/block-renderer";
 export { Button, buttonVariants } from "./components/button";
 export { Calendar } from "./components/calendar";
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, StatCard, StatCardGrid } from "./components/card";
@@ -12,6 +20,24 @@ export type { StatCardProps, StatCardGridProps } from "./components/card";
 export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./components/carousel";
 export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle } from "./components/chart";
 export { Checkbox } from "./components/checkbox";
+export { ChatPanel } from "./components/chat-panel";
+export type {
+  ChatPanelProps,
+  ChatPanelLabels,
+  ChatMessage,
+  ChatMessageRole,
+} from "./components/chat-panel";
+export { AIGenerateDialog, AITextToolbar } from "./components/ai-writing-tools";
+export type {
+  AIGenerateDialogProps,
+  AIGenerateDialogLabels,
+  AIGenerateInput,
+  AIGenerateResult,
+  AIOutlineItem,
+  AITextToolbarProps,
+  AITextToolbarLabels,
+  AITextAction,
+} from "./components/ai-writing-tools";
 export { Chip, ChipsContainer } from "./components/chip";
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./components/collapsible";
 export { Combobox } from "./components/combobox";
