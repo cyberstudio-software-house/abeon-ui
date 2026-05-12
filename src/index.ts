@@ -14,6 +14,8 @@ export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLe
 export { Checkbox } from "./components/checkbox";
 export { Chip, ChipsContainer } from "./components/chip";
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./components/collapsible";
+export { Combobox } from "./components/combobox";
+export type { ComboboxOption } from "./components/combobox";
 export { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "./components/command";
 export { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuGroup, ContextMenuItem, ContextMenuLabel, ContextMenuPortal, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "./components/context-menu";
 export { DatePicker } from "./components/date-picker";
@@ -33,6 +35,8 @@ export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./comp
 export { Input, SearchInput } from "./components/input";
 export { Label } from "./components/label";
 export { Menubar, MenubarCheckboxItem, MenubarContent, MenubarGroup, MenubarItem, MenubarLabel, MenubarMenu, MenubarPortal, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from "./components/menubar";
+export { MultiSelect } from "./components/multi-select";
+export type { MultiSelectOption } from "./components/multi-select";
 export { NavigationMenu, NavigationMenuContent, NavigationMenuIndicator, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, NavigationMenuViewport, navigationMenuTriggerStyle } from "./components/navigation-menu";
 export { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "./components/pagination";
 export { Popover, PopoverContent, PopoverTrigger } from "./components/popover";
@@ -47,6 +51,8 @@ export { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHe
 export { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarGroupAction, SidebarGroupContent, SidebarGroupLabel, SidebarHeader, SidebarInput, SidebarInset, SidebarMenu, SidebarMenuAction, SidebarMenuBadge, SidebarMenuButton, SidebarMenuItem, SidebarMenuSkeleton, SidebarMenuSub, SidebarMenuSubButton, SidebarMenuSubItem, SidebarProvider, SidebarRail, SidebarSeparator, SidebarTrigger, useSidebar } from "./components/sidebar";
 export { Skeleton } from "./components/skeleton";
 export { Slider } from "./components/slider";
+export { Spinner, spinnerVariants } from "./components/spinner";
+export type { SpinnerProps } from "./components/spinner";
 export { Toaster as Sonner } from "./components/sonner";
 export { Switch } from "./components/switch";
 export { SystemNotificationPanel, NotificationProvider, useSystemNotifications, useNotify } from "./components/system-notifications";
@@ -60,6 +66,8 @@ export { Toaster } from "./components/toaster";
 export { ToggleGroup, ToggleGroupItem } from "./components/toggle-group";
 export { Toggle, toggleVariants } from "./components/toggle";
 export { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./components/tooltip";
+export { Heading, Text, Code, Link, headingVariants, textVariants, linkVariants } from "./components/typography";
+export type { HeadingProps, TextProps, CodeProps, LinkProps } from "./components/typography";
 export { useToast, toast } from "./components/use-toast";
 export { cn } from "./lib/utils";
 
