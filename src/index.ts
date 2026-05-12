@@ -150,6 +150,23 @@ export type { AppShellProps } from "./components/layout/app-shell";
 export { AppSidebar } from "./components/layout/app-sidebar";
 export type { AppSidebarProps, NavItem, NavGroup } from "./components/layout/app-sidebar";
 
+export { SidebarPinnedSection } from "./components/layout/sidebar-pinned-section";
+export type {
+  SidebarPinnedSectionProps,
+  SidebarPinnedSectionLabels,
+  PinnedItem,
+  PinnedSection,
+} from "./components/layout/sidebar-pinned-section";
+
+export { NavItemActions, PinItemDialog } from "./components/layout/nav-item-actions";
+export type {
+  NavItemActionsProps,
+  NavItemActionsLabels,
+  PinItemDialogProps,
+  PinItemDialogLabels,
+  PinItemPayload,
+} from "./components/layout/nav-item-actions";
+
 export { Topbar } from "./components/layout/topbar";
 export type { TopbarProps, TopbarUser } from "./components/layout/topbar";
 
@@ -158,6 +175,13 @@ export type { PageLayoutProps } from "./components/layout/page-layout";
 
 export { ContentArea } from "./components/layout/content-area";
 export type { ContentAreaProps } from "./components/layout/content-area";
+
+export { InboxLayout } from "./components/layout/inbox-layout";
+export type {
+  InboxLayoutProps,
+  InboxLayoutLabels,
+  InboxPane,
+} from "./components/layout/inbox-layout";
 
 export { AppSwitcher } from "./components/composite/app-switcher";
 export type { AppSwitcherProps } from "./components/composite/app-switcher";
