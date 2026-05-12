@@ -175,6 +175,32 @@ export const Empty: Story = {
   },
 };
 
+const filterableColumns: DataTableColumn<Project>[] = [
+  { ...columns[0], filterable: true },
+  { ...columns[1], filterable: true },
+  { ...columns[2], filterable: true },
+  {
+    ...columns[3],
+    filterable: true,
+    filterAccessor: (row) => row.status,
+  },
+  { ...columns[4], filterable: true },
+  { ...columns[5], filterable: true },
+];
+
+export const WithFilters: Story = {
+  args: {
+    data: projects,
+    columns: filterableColumns,
+    rowActions,
+    showFilterRow: true,
+    labels: {
+      filterPlaceholder: "filtruj…",
+      actionsHeader: "Akcje",
+    },
+  },
+};
+
 export const PolishLabels: Story = {
   args: {
     data: projects,

@@ -41,6 +41,8 @@ export interface DataTableColumn<T> {
   accessorKey?: keyof T;
   cell?: (row: T) => React.ReactNode;
   sortable?: boolean;
+  filterable?: boolean;
+  filterAccessor?: (row: T) => string;
   width?: string;
 }
 
@@ -75,6 +77,7 @@ export interface DataTableLabels {
   nextPageTooltip?: string;
   selectAllLabel?: string;
   selectRowLabel?: (id: string | number) => string;
+  filterPlaceholder?: string;
 }
 
 const defaultLabels: Required<DataTableLabels> = {
@@ -91,6 +94,7 @@ const defaultLabels: Required<DataTableLabels> = {
   nextPageTooltip: "Next page",
   selectAllLabel: "Select all",
   selectRowLabel: (id) => `Select row ${id}`,
+  filterPlaceholder: "filter…",
 };
 
 export interface DataTableProps<T> {
@@ -110,6 +114,8 @@ export interface DataTableProps<T> {
   density?: DataTableDensity;
   onDensityChange?: (density: DataTableDensity) => void;
   sortable?: boolean;
+  showFilterRow?: boolean;
+  onFilterChange?: (filters: Record<string, string>) => void;
   emptyState?: React.ReactNode;
   labels?: DataTableLabels;
 }
@@ -127,6 +133,8 @@ export function DataTable<T extends { id: string | number }>({
   density = "normal",
   onDensityChange,
   sortable = true,
+  showFilterRow = false,
+  onFilterChange,
   emptyState,
   labels,
 }: DataTableProps<T>) {
@@ -138,6 +146,35 @@ export function DataTable<T extends { id: string | number }>({
   const [visibleColumns, setVisibleColumns] = React.useState<Set<string>>(
     new Set(columns.map((c) => c.id))
   );
+  const [filters, setFilters] = React.useState<Record<string, string>>({});
+
+  const displayData = React.useMemo(() => {
+    if (!showFilterRow) return data;
+    const activeFilters = Object.entries(filters).filter(
+      ([, value]) => value.trim() !== "",
+    );
+    if (activeFilters.length === 0) return data;
+    return data.filter((row) =>
+      activeFilters.every(([columnId, raw]) => {
+        const column = columns.find((c) => c.id === columnId);
+        if (!column?.filterable) return true;
+        const cellText = column.filterAccessor
+          ? column.filterAccessor(row)
+          : column.accessorKey
+          ? String(row[column.accessorKey] ?? "")
+          : "";
+        return cellText.toLowerCase().includes(raw.trim().toLowerCase());
+      }),
+    );
+  }, [data, columns, filters, showFilterRow]);
+
+  const handleFilterChange = (columnId: string, value: string) => {
+    setFilters((prev) => {
+      const next = { ...prev, [columnId]: value };
+      onFilterChange?.(next);
+      return next;
+    });
+  };
 
   const densityClasses: Record<DataTableDensity, string> = {
     compact: "h-8 text-xs",
@@ -147,9 +184,9 @@ export function DataTable<T extends { id: string | number }>({
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      const allIds = new Set(data.map((row) => row.id));
+      const allIds = new Set(displayData.map((row) => row.id));
       setSelectedRows(allIds);
-      onSelectionChange?.(data);
+      onSelectionChange?.(displayData);
     } else {
       setSelectedRows(new Set());
       onSelectionChange?.([]);
@@ -188,8 +225,8 @@ export function DataTable<T extends { id: string | number }>({
   };
 
   const filteredColumns = columns.filter((col) => visibleColumns.has(col.id));
-  const allSelected = data.length > 0 && selectedRows.size === data.length;
-  const someSelected = selectedRows.size > 0 && selectedRows.size < data.length;
+  const allSelected = displayData.length > 0 && selectedRows.size === displayData.length;
+  const someSelected = selectedRows.size > 0 && selectedRows.size < displayData.length;
   const totalPages = pagination
     ? Math.ceil(pagination.total / pagination.pageSize)
     : 0;
@@ -295,9 +332,28 @@ export function DataTable<T extends { id: string | number }>({
                 <TableHead className="w-20 text-right">{t.actionsHeader}</TableHead>
               )}
             </TableRow>
+            {showFilterRow && (
+              <TableRow className="hover:bg-transparent">
+                {selectable && <TableHead className="w-12" />}
+                {filteredColumns.map((column) => (
+                  <TableHead key={`filter-${column.id}`} className="py-2">
+                    {column.filterable ? (
+                      <input
+                        type="text"
+                        value={filters[column.id] ?? ""}
+                        onChange={(e) => handleFilterChange(column.id, e.target.value)}
+                        placeholder={t.filterPlaceholder}
+                        className="h-7 w-full rounded-full border border-input bg-background px-3 text-xs font-normal text-foreground placeholder:text-foreground-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1"
+                      />
+                    ) : null}
+                  </TableHead>
+                ))}
+                {(rowActions || quickAction) && <TableHead className="w-20" />}
+              </TableRow>
+            )}
           </TableHeader>
           <TableBody>
-            {data.length === 0 ? (
+            {displayData.length === 0 ? (
               <TableRow>
                 <TableCell
                   colSpan={
@@ -313,7 +369,7 @@ export function DataTable<T extends { id: string | number }>({
                 </TableCell>
               </TableRow>
             ) : (
-              data.map((row) => (
+              displayData.map((row) => (
                 <TableRow
                   key={row.id}
                   className={cn(selectedRows.has(row.id) && "bg-primary-muted/30")}
