@@ -17,9 +17,30 @@ export { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./component
 export { Combobox } from "./components/combobox";
 export type { ComboboxOption } from "./components/combobox";
 export { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "./components/command";
+export { ConfirmDialog } from "./components/confirm-dialog";
+export type { ConfirmDialogProps } from "./components/confirm-dialog";
 export { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuGroup, ContextMenuItem, ContextMenuLabel, ContextMenuPortal, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "./components/context-menu";
 export { DataList, DataListRow } from "./components/data-list";
 export type { DataListProps, DataListRowProps } from "./components/data-list";
+export {
+  DetailPanel,
+  DetailHeader,
+  DetailSection,
+  DetailMetricGrid,
+  DetailMetric,
+  DetailKeyValue,
+  DetailBody,
+} from "./components/detail-panel";
+export type {
+  DetailPanelProps,
+  DetailHeaderProps,
+  DetailSectionProps,
+  DetailMetricGridProps,
+  DetailMetricProps,
+  DetailKeyValueProps,
+  DetailBodyProps,
+  DetailTrendDirection,
+} from "./components/detail-panel";
 export { DataTable } from "./components/data-table";
 export type {
   DataTableColumn,
@@ -39,6 +60,17 @@ export { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, Dr
 export { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuPortal, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSeparator, DropdownMenuShortcut, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger, DropdownMenuTrigger } from "./components/dropdown-menu";
 export { EmptyState } from "./components/empty-state";
 export { useFormField, Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "./components/form";
+export { FormDrawer } from "./components/form-drawer";
+export type { FormDrawerProps } from "./components/form-drawer";
+export { FilterDrawer } from "./components/filter-drawer";
+export type {
+  FilterDrawerProps,
+  FilterDrawerLabels,
+  FilterField,
+  FilterFieldType,
+  FilterOption,
+  FilterValues,
+} from "./components/filter-drawer";
 export { HoverCard, HoverCardContent, HoverCardTrigger } from "./components/hover-card";
 export { IconButton, iconButtonVariants } from "./components/icon-button";
 export { IconPicker, getIconByName, availableIcons } from "./components/icon-picker";
@@ -49,7 +81,11 @@ export { Menubar, MenubarCheckboxItem, MenubarContent, MenubarGroup, MenubarItem
 export { MultiSelect } from "./components/multi-select";
 export type { MultiSelectOption } from "./components/multi-select";
 export { NavigationMenu, NavigationMenuContent, NavigationMenuIndicator, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, NavigationMenuViewport, navigationMenuTriggerStyle } from "./components/navigation-menu";
+export { PageHeader } from "./components/page-header";
+export type { PageHeaderProps } from "./components/page-header";
 export { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "./components/pagination";
+export { PaginationBar } from "./components/pagination-bar";
+export type { PaginationBarProps } from "./components/pagination-bar";
 export { Popover, PopoverContent, PopoverTrigger } from "./components/popover";
 export { Progress } from "./components/progress";
 export { RadioGroup, RadioGroupItem } from "./components/radio-group";
