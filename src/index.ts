@@ -18,6 +18,17 @@ export { Combobox } from "./components/combobox";
 export type { ComboboxOption } from "./components/combobox";
 export { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator, CommandShortcut } from "./components/command";
 export { ContextMenu, ContextMenuCheckboxItem, ContextMenuContent, ContextMenuGroup, ContextMenuItem, ContextMenuLabel, ContextMenuPortal, ContextMenuRadioGroup, ContextMenuRadioItem, ContextMenuSeparator, ContextMenuShortcut, ContextMenuSub, ContextMenuSubContent, ContextMenuSubTrigger, ContextMenuTrigger } from "./components/context-menu";
+export { DataList, DataListRow } from "./components/data-list";
+export type { DataListProps, DataListRowProps } from "./components/data-list";
+export { DataTable } from "./components/data-table";
+export type {
+  DataTableColumn,
+  DataTableRowAction,
+  DataTableDensity,
+  DataTablePagination,
+  DataTableLabels,
+  DataTableProps,
+} from "./components/data-table";
 export { DatePicker } from "./components/date-picker";
 export { DateRangePicker } from "./components/date-range-picker";
 export { DateTimePicker } from "./components/date-time-picker";

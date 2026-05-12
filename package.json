@@ -35,7 +35,15 @@
   },
   "peerDependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "@dnd-kit/core": "^6.0.0",
+    "@dnd-kit/sortable": "^9.0.0 || ^10.0.0",
+    "@dnd-kit/utilities": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@dnd-kit/core": { "optional": true },
+    "@dnd-kit/sortable": { "optional": true },
+    "@dnd-kit/utilities": { "optional": true }
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",
@@ -95,6 +103,9 @@
     "vaul": "^0.9.9"
   },
   "devDependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@storybook/addon-essentials": "^8.6.14",
     "@storybook/addon-themes": "^8.6.17",
     "@storybook/react-vite": "^8.6.17",
