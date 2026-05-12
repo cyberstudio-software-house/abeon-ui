@@ -102,6 +102,14 @@ All ~55 components are importable by name from the `@abeon/ui` barrel.
 | `EmptyState` | empty-state.tsx |
 | `Badge`, `StatusBadge` | badge.tsx |
 | `Card`, `CardContent`, `CardHeader`, `CardTitle`, `StatCard` | card.tsx |
+| `DatePicker` | date-picker.tsx |
+| `DateRangePicker`, `DateRange` (type) | date-range-picker.tsx |
+| `MultiSelect`, `MultiSelectOption` (type) | multi-select.tsx |
+| `Combobox`, `ComboboxOption` (type) | combobox.tsx |
+| `Spinner` | spinner.tsx |
+| `Heading`, `Text`, `Code`, `Link` | typography.tsx |
+| `Alert`, `AlertTitle`, `AlertDescription` (`info`/`success`/`warning`/`danger` variants) | alert.tsx |
+| `Form`, `FormField`, `FormItem`, `FormLabel`, `FormControl`, `FormDescription`, `FormMessage` | form.tsx |
 | `Toaster` | toaster.tsx (shadcn toast) |
 | `Sonner` | sonner.tsx (sonner toast) |
 | `cn` | lib/utils.ts |
