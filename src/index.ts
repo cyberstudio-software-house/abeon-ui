@@ -189,6 +189,24 @@ export type { AppSwitcherProps } from "./components/composite/app-switcher";
 export { NotificationCenter } from "./components/composite/notification-center";
 export type { NotificationCenterProps } from "./components/composite/notification-center";
 
+export { UserMenu } from "./components/layout/user-menu";
+export type {
+  UserMenuProps,
+  UserMenuUser,
+  UserMenuItem,
+} from "./components/layout/user-menu";
+
+export {
+  CommandPalette,
+  useCommandPaletteShortcut,
+} from "./components/layout/command-palette";
+export type {
+  CommandPaletteProps,
+  PaletteCommand,
+} from "./components/layout/command-palette";
+
+export type { AppShellVariant } from "./components/layout/app-shell";
+
 export { useSidebarCollapsed } from "./lib/use-sidebar-collapsed";
 
 export type { AppManifest, AppCategory } from "./types/app-manifest";

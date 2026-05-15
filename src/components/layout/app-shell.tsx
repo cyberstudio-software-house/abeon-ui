@@ -1,16 +1,44 @@
 import React from "react";
 import { cn } from "../../lib/utils";
 
+export type AppShellVariant = "app" | "public";
+
 export interface AppShellProps {
-  sidebar: React.ReactNode;
-  topbar: React.ReactNode;
+  /** Sidebar element. Required for variant=`"app"`, ignored for `"public"`. */
+  sidebar?: React.ReactNode;
+  /** Topbar element. Required for variant=`"app"`, ignored for `"public"`. */
+  topbar?: React.ReactNode;
   children: React.ReactNode;
-  collapsed: boolean;
+  /** Sidebar collapsed state — only used for `"app"` variant. */
+  collapsed?: boolean;
   noPadding?: boolean;
+  /**
+   * Layout variant (per ADR §3.4 + D8):
+   *   - `"app"` (default) — full chrome with sidebar + topbar offsets.
+   *   - `"public"` — no chrome; bare wrapper for marketing/CMS public pages
+   *     where the federated chrome must not appear.
+   */
+  variant?: AppShellVariant;
   className?: string;
 }
 
-export function AppShell({ sidebar, topbar, children, collapsed, noPadding, className }: AppShellProps) {
+export function AppShell({
+  sidebar,
+  topbar,
+  children,
+  collapsed = false,
+  noPadding,
+  variant = "app",
+  className,
+}: AppShellProps) {
+  if (variant === "public") {
+    return (
+      <div className={cn("min-h-screen bg-background", className)}>
+        {noPadding ? children : <div className="min-h-screen">{children}</div>}
+      </div>
+    );
+  }
+
   return (
     <div className={cn("min-h-screen bg-background", className)}>
       {sidebar}
