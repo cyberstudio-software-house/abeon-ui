@@ -207,6 +207,18 @@ export type {
 
 export type { AppShellVariant } from "./components/layout/app-shell";
 
+export { AuthLayout } from "./components/layout/auth-layout";
+export type { AuthLayoutProps } from "./components/layout/auth-layout";
+
+export { LoginForm } from "./components/layout/login-form";
+export type { LoginFormProps, LoginFormLabels } from "./components/layout/login-form";
+
+export { ForgotPasswordForm } from "./components/layout/forgot-password-form";
+export type {
+  ForgotPasswordFormProps,
+  ForgotPasswordFormLabels,
+} from "./components/layout/forgot-password-form";
+
 export { useSidebarCollapsed } from "./lib/use-sidebar-collapsed";
 
 export type { AppManifest, AppCategory } from "./types/app-manifest";
