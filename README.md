@@ -87,7 +87,8 @@ export function MyComponent() {
 }
 ```
 
-All ~55 components are importable by name from the `@abeon/ui` barrel.
+All exports come by name from the single `@abeon/ui` barrel — **420 of them** across roughly 130
+modules. The table below is a selection, not an inventory; `src/index.ts` is the list of record.
 
 ### Available exports (selected)
 
@@ -115,6 +116,15 @@ All ~55 components are importable by name from the `@abeon/ui` barrel.
 | `cn` | lib/utils.ts |
 | `useToast`, `toast` | lib/use-toast.ts |
 | `useIsMobile` | lib/use-mobile.ts |
+| `AuthLayout` | layout/auth-layout.tsx — centred card for screens with no session |
+| `LoginForm` | layout/login-form.tsx |
+| `ForgotPasswordForm` | layout/forgot-password-form.tsx |
+| `SetPasswordForm` | layout/set-password-form.tsx — invitation acceptance, password reset |
+
+**The four pre-auth components are presentational only** (ADR-0027). Each renders a real
+`<form method action>` with named fields and a `hiddenFields` slot, so it submits without JavaScript
+and the host keeps the routing, the CSRF token, the POST and the redirect. They hold no route and make
+no call. `abeon-auth-ui` is the consumer.
 
 ---
 
@@ -141,15 +151,30 @@ The `darkMode: "class"` setting enables the `.dark` class strategy used by the t
 
 ## Local developer setup
 
-To install `@abeon/ui` locally from this repository (without publishing to GitHub Packages):
+Neither consumer uses `npm link`. Both declare a `file:` dependency on the real package name and
+alias it to `@abeon/ui` at build time, which survives a reinstall and does not need relinking:
 
-```bash
-cd path/to/AbeonUnified/abeon-ui
-npm link
-
-cd your-consumer-project
-npm link @abeon/ui
+```jsonc
+// package.json
+"dependencies": {
+    "@cyberstudio-software-house/ui": "file:../../abeon-ui"
+}
 ```
+
+```ts
+// vite.config.ts — and mirror it in vitest.config.ts, or tests resolve differently
+resolve: { alias: { '@abeon/ui': '@cyberstudio-software-house/ui' } }
+```
+
+Two things the consumers also need, both easy to miss:
+
+- **`tailwind.config.ts` must import the preset by the real package name** — a Vite alias does not
+  apply to Node-side config — and list `./node_modules/@cyberstudio-software-house/ui/dist/**` in
+  `content`, or every class this library uses is purged.
+- **`dist/` is gitignored**, so a fresh clone needs `npm run build` here before a consumer resolves
+  anything. That includes CI.
+
+`npm install` in a consumer works with React 18 or 19; the peer range accepts both.
 
 To use the published package from GitHub Packages, set `NODE_AUTH_TOKEN` in your environment:
 
@@ -181,7 +206,7 @@ The package appears in GitHub Packages at: `https://github.com/abeon/abeon-ui/pk
 `react` and `react-dom` are peer dependencies — they are NOT bundled. Your consumer project must provide them:
 
 ```bash
-npm install react@^18 react-dom@^18
+npm install react@^18 react-dom@^19   # ^18 and ^19 are both accepted
 ```
 
 This prevents duplicate React instances and "Invalid hook call" errors.
