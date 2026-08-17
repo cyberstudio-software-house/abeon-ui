@@ -219,6 +219,12 @@ export type {
   ForgotPasswordFormLabels,
 } from "./components/layout/forgot-password-form";
 
+export { SetPasswordForm } from "./components/layout/set-password-form";
+export type {
+  SetPasswordFormProps,
+  SetPasswordFormLabels,
+} from "./components/layout/set-password-form";
+
 export { useSidebarCollapsed } from "./lib/use-sidebar-collapsed";
 
 export type { AppManifest, AppCategory } from "./types/app-manifest";
