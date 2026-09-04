@@ -2,7 +2,7 @@
 
 Tracked defects found while integrating the federated chrome (abeon-boilerplate-inertia, 2026-06-23).
 
-## 1. `getIconByName` returns `undefined` for valid Lucide names (consumer crash risk) — OPEN
+## 1. `getIconByName` returns `undefined` for valid Lucide names (consumer crash risk) — MITIGATED 2026-09-04
 
 **Where:** `src/components/icon-picker.tsx:196`
 ```ts
@@ -29,6 +29,20 @@ known to be in the set — `getIconByName(name) ?? getIconByName('Package')` —
   returning `undefined`, and/or expose a non-optional `getIconByNameOrDefault(name, fallback)`; and/or
 - widen `availableIcons` toward the full Lucide set (or accept a Lucide component directly);
 - at minimum, document that the set is curated and `undefined` is expected for unlisted names.
+
+
+**Mitigated 2026-09-04.** The curated set was widened to cover every name the platform actually
+passes — including `LayoutDashboard`, which the application catalogue's own seeder uses and which was
+silently resolving to a fallback — plus the six named above. `src/components/icon-picker.test.tsx`
+pins two contracts: every entry in `availableIcons` resolves to something React can render, and every
+name any consumer passes resolves. A rename in Lucide now fails a test rather than blanking an icon.
+
+**Not fixed, deliberately: the signature still returns `undefined`.** Resolving all of Lucide would
+undo a measured win — excluding it took the `abeon-auth-ui` login screen from 264 kB to 11.9 kB gzip
+(§4) — and a silent fallback inside the library would hide a misspelled name, when only the caller
+knows what a sensible substitute is. Callers that take names **from the server** must still handle
+`undefined`; `abeon-boilerplate-inertia/resources/js/lib/chrome-mappers.ts` does, and is now the one
+place that does, instead of three.
 
 ## 2. `CommandPalette` missing `DialogTitle`/`Description` (a11y) — FIXED 2026-06-23
 

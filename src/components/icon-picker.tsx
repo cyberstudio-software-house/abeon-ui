@@ -55,6 +55,14 @@ import {
   Wallet,
   Receipt,
   type LucideIcon,
+  LayoutDashboard,
+  Kanban,
+  Boxes,
+  Circle,
+  Info,
+  Check,
+  TriangleAlert,
+  AlertTriangle,
 } from "lucide-react";
 
 interface IconOption {
@@ -64,6 +72,19 @@ interface IconOption {
 }
 
 const availableIcons: IconOption[] = [
+  // Added 2026-09-04. The set was 46 names and every miss returned `undefined`, which
+  // reaches a prop typed `LucideIcon`, renders `<undefined />` and takes the whole tree
+  // down with React error #130 (KNOWN_ISSUES §1). These are the names the platform
+  // actually passes — the application catalogue's `layout-dashboard` was resolving to a
+  // fallback, and the other six are the ones that issue names outright.
+  { name: "LayoutDashboard", icon: LayoutDashboard, keywords: ["pulpit", "kokpit", "przegląd"] },
+  { name: "Kanban", icon: Kanban, keywords: ["tablica", "zadania", "projekt"] },
+  { name: "Boxes", icon: Boxes, keywords: ["moduły", "aplikacje", "zestaw"] },
+  { name: "Circle", icon: Circle, keywords: ["kółko", "status", "kropka"] },
+  { name: "Info", icon: Info, keywords: ["informacja", "podpowiedź"] },
+  { name: "Check", icon: Check, keywords: ["ptaszek", "gotowe", "zaznaczone"] },
+  { name: "TriangleAlert", icon: TriangleAlert, keywords: ["ostrzeżenie", "uwaga", "błąd"] },
+  { name: "AlertTriangle", icon: AlertTriangle, keywords: ["ostrzeżenie", "uwaga", "błąd"] },
   { name: "Home", icon: Home, keywords: ["dom", "strona", "główna"] },
   { name: "FileText", icon: FileText, keywords: ["plik", "dokument", "tekst"] },
   { name: "Settings", icon: Settings, keywords: ["ustawienia", "konfiguracja"] },
@@ -193,6 +214,22 @@ export function IconPicker({ value, onChange, trigger }: IconPickerProps) {
   );
 }
 
+/**
+ * Resolve an icon by its Lucide name, or `undefined` if this library does not carry it.
+ *
+ * **`availableIcons` is curated on purpose** — it is what the picker renders, and a picker
+ * offering Lucide's ~1500 icons is not a picker. Resolving the full set instead would also
+ * undo a measured win: excluding it is what took the `abeon-auth-ui` login screen from
+ * 264 kB to 11.9 kB gzip, and importing the whole map would pull all of it back.
+ *
+ * **`undefined` stays in the signature**, deliberately. A silent fallback would hide a
+ * misspelled name, and the caller is the only party that knows what a sensible substitute
+ * is. What changed on 2026-09-04 is that a miss is now the exception rather than the rule:
+ * every name the platform passes is in the set, and a test asserts it.
+ *
+ * Callers must still handle `undefined`. Feeding it to a prop typed `LucideIcon` renders
+ * `<undefined />` and unmounts the tree with React error #130 (KNOWN_ISSUES §1).
+ */
 export function getIconByName(name: string): LucideIcon | undefined {
   return availableIcons.find((i) => i.name === name)?.icon;
 }
