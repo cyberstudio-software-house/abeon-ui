@@ -43,6 +43,14 @@ export interface DataTableColumn<T> {
   sortable?: boolean;
   filterable?: boolean;
   filterAccessor?: (row: T) => string;
+  /**
+   * Value to sort this column by, when `accessorKey` is not it.
+   *
+   * A column that renders a `Badge`, a formatted date or a joined name has a cell that
+   * is JSX and an `accessorKey` that may not exist at all. Sorting has to run on a value,
+   * so this is the sort-side counterpart of `filterAccessor`.
+   */
+  sortAccessor?: (row: T) => string | number | Date | null | undefined;
   width?: string;
 }
 
@@ -116,8 +124,60 @@ export interface DataTableProps<T> {
   sortable?: boolean;
   showFilterRow?: boolean;
   onFilterChange?: (filters: Record<string, string>) => void;
+  /**
+   * Notified whenever the sort changes. The table still sorts its own rows — this is for
+   * a caller that wants to sort server-side instead, exactly as `onFilterChange` is.
+   */
+  onSortChange?: (columnId: string | null, direction: "asc" | "desc") => void;
   emptyState?: React.ReactNode;
   labels?: DataTableLabels;
+}
+
+/**
+ * The value a column sorts by: its `sortAccessor` if it has one, otherwise the raw field
+ * behind `accessorKey`.
+ *
+ * Never the rendered cell — `cell` returns JSX, and a column that renders a badge or a
+ * formatted date would otherwise sort by "[object Object]".
+ */
+function sortValue<T>(
+  column: DataTableColumn<T>,
+  row: T,
+): string | number | Date | null | undefined {
+  if (column.sortAccessor) return column.sortAccessor(row);
+  if (!column.accessorKey) return undefined;
+
+  const raw = row[column.accessorKey];
+  if (raw === null || raw === undefined) return undefined;
+  if (typeof raw === "number" || typeof raw === "string") return raw;
+  if (raw instanceof Date) return raw;
+
+  return String(raw);
+}
+
+/**
+ * Compare two present values, ascending.
+ *
+ * Strings go through `localeCompare` with `numeric: true`, so "Item 2" precedes "Item 10"
+ * and Polish diacritics order the way a Polish reader expects — this platform's UI is
+ * Polish and a plain `<` puts "Zawieszony" before "Ż" wrongly.
+ */
+function compareValues(
+  left: string | number | Date,
+  right: string | number | Date,
+): number {
+  if (left instanceof Date || right instanceof Date) {
+    return Number(new Date(left as Date)) - Number(new Date(right as Date));
+  }
+
+  if (typeof left === "number" && typeof right === "number") {
+    return left - right;
+  }
+
+  return String(left).localeCompare(String(right), undefined, {
+    numeric: true,
+    sensitivity: "base",
+  });
 }
 
 export function DataTable<T extends { id: string | number }>({
@@ -135,6 +195,7 @@ export function DataTable<T extends { id: string | number }>({
   sortable = true,
   showFilterRow = false,
   onFilterChange,
+  onSortChange,
   emptyState,
   labels,
 }: DataTableProps<T>) {
@@ -148,7 +209,7 @@ export function DataTable<T extends { id: string | number }>({
   );
   const [filters, setFilters] = React.useState<Record<string, string>>({});
 
-  const displayData = React.useMemo(() => {
+  const filteredData = React.useMemo(() => {
     if (!showFilterRow) return data;
     const activeFilters = Object.entries(filters).filter(
       ([, value]) => value.trim() !== "",
@@ -167,6 +228,43 @@ export function DataTable<T extends { id: string | number }>({
       }),
     );
   }, [data, columns, filters, showFilterRow]);
+
+  /**
+   * Sorted rows.
+   *
+   * **This did not exist until 2026-09-04.** `sortColumn` and `sortDirection` were set by
+   * the header click and read by nothing except the arrow icon, so clicking a header
+   * flipped the arrow and left the rows exactly where they were — with `sortable`
+   * defaulting to `true`, every table in the platform advertised sorting and delivered
+   * none. There was no `onSortChange` either, so a caller could not supply it.
+   *
+   * Sorted after filtering, so the two compose in the order a reader expects.
+   */
+  const displayData = React.useMemo(() => {
+    if (!sortColumn) return filteredData;
+
+    const column = columns.find((c) => c.id === sortColumn);
+    if (!column || column.sortable === false || !sortable) return filteredData;
+
+    const direction = sortDirection === "asc" ? 1 : -1;
+
+    // A copy: `data` belongs to the caller and `Array.prototype.sort` mutates.
+    return [...filteredData].sort((a, b) => {
+      const left = sortValue(column, a);
+      const right = sortValue(column, b);
+
+      // Absent values sort last in **both** directions. Reversing them with the rest
+      // would put the rows a user is least interested in at the top of a descending
+      // sort, which is never what "sort by last used" is asked for.
+      const leftMissing = left === null || left === undefined || left === "";
+      const rightMissing = right === null || right === undefined || right === "";
+      if (leftMissing && rightMissing) return 0;
+      if (leftMissing) return 1;
+      if (rightMissing) return -1;
+
+      return compareValues(left, right) * direction;
+    });
+  }, [filteredData, columns, sortColumn, sortDirection, sortable]);
 
   const handleFilterChange = (columnId: string, value: string) => {
     setFilters((prev) => {
@@ -206,10 +304,13 @@ export function DataTable<T extends { id: string | number }>({
 
   const handleSort = (columnId: string) => {
     if (sortColumn === columnId) {
-      setSortDirection(sortDirection === "asc" ? "desc" : "asc");
+      const next = sortDirection === "asc" ? "desc" : "asc";
+      setSortDirection(next);
+      onSortChange?.(columnId, next);
     } else {
       setSortColumn(columnId);
       setSortDirection("asc");
+      onSortChange?.(columnId, "asc");
     }
   };
 
