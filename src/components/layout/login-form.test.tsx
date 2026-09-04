@@ -12,7 +12,7 @@ import { LoginForm } from "./login-form";
  */
 describe("LoginForm", () => {
     it("is a real form that submits without JavaScript", () => {
-        // The reason this matters is in `abeon-auth-ui/resources/js/Pages/Login.tsx`:
+        // The reason this matters is in `abeon-auth/auth-ui/resources/js/Pages/Login.tsx`:
         // the host's success path is a cross-origin `redirect()->away()` with cookies
         // relayed, which an XHR submit cannot follow.
         const { container } = render(<LoginForm action="/login" />);
