@@ -27,6 +27,7 @@
   ],
   "scripts": {
     "build": "tsup && cp tokens.css dist/tokens.css",
+    "prepare": "npm run build",
     "build:watch": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build",
