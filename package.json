@@ -1,6 +1,6 @@
 {
   "name": "@cyberstudio-software-house/ui",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Abeon Design System — shadcn/ui components, CSS tokens, and Tailwind preset",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -26,7 +26,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup && cp tokens.css dist/tokens.css",
+    "build": "tsup && cp tokens.css dist/tokens.css && node scripts/fix-esm-extensions.mjs",
     "prepare": "npm run build",
     "build:watch": "tsup --watch",
     "typecheck": "tsc --noEmit",
