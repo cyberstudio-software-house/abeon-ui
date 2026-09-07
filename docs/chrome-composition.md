@@ -3,7 +3,7 @@
 `@abeon/ui` ships chrome **components** (`AppShell`, `AppSidebar`, `Topbar`,
 `AppSwitcher`, `NotificationCenter`, `UserMenu`, `CommandPalette`, …). It
 deliberately does **not** ship a one-line `ChromeProvider` because that
-would force every consumer to install `@abeon/shared` and couple the design
+would force every consumer to install `@abeon/sdk-ts` and couple the design
 system to the data layer.
 
 Apps compose providers + chrome themselves. The recommended stack lives
@@ -14,13 +14,13 @@ here so all 16 services agree on the order.
 ```tsx
 // app/layout.tsx (Next.js)  ·  resources/js/Layouts/AppLayout.tsx (Inertia)
 import { cookies } from 'next/headers'; // or Inertia equivalent
-import { getServerAuthContext } from '@abeon/shared/server';
+import { getServerAuthContext } from '@abeon/sdk-ts/server';
 import {
   AbeonProvider,
   CurrentAppProvider,
   CommandRegistryProvider,
-} from '@abeon/shared/react';
-import { ABEON_THEME_DEFAULTS } from '@abeon/shared';
+} from '@abeon/sdk-ts/react';
+import { ABEON_THEME_DEFAULTS } from '@abeon/sdk-ts';
 import { ThemeProvider } from 'next-themes';
 import { AppShell, AppSidebar, Topbar } from '@abeon/ui';
 
@@ -50,8 +50,8 @@ export default async function RootLayout({ children }) {
 ```tsx
 'use client';
 import { useState } from 'react';
-import { useAuth, useApps, useAppOrder, useNotifications } from '@abeon/shared/react';
-import { crossAppHref } from '@abeon/shared/client';
+import { useAuth, useApps, useAppOrder, useNotifications } from '@abeon/sdk-ts/react';
+import { crossAppHref } from '@abeon/sdk-ts/client';
 import {
   AppShell, AppSidebar, Topbar,
   AppSwitcher, NotificationCenter, UserMenu, CommandPalette,

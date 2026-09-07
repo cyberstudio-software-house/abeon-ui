@@ -46,7 +46,7 @@ export interface UserMenuProps {
  * Use directly for non-chrome avatars (mobile floating menu, account drawer).
  *
  * Props-only — wire your own data, or use `<ConnectedUserMenu>` to feed it
- * `useAuth()` + onSignOut from `@abeon/shared`.
+ * `useAuth()` + onSignOut from `@abeon/sdk-ts`.
  */
 export function UserMenu({
   user,

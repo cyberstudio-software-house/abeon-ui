@@ -55,7 +55,7 @@ const DEBOUNCE_MS = 250;
  * Use the standalone control when you have your own command source. For
  * federated chrome that aggregates per-service registries, use
  * `<ConnectedCommandPalette>` which feeds itself from `useCommandRegistry()`
- * in `@abeon/shared`.
+ * in `@abeon/sdk-ts`.
  *
  * Cmd+K / Ctrl+K binding is wired by the consumer — set `open` from a
  * `useEffect` listening on `keydown`. The palette itself does not register
