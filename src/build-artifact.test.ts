@@ -48,7 +48,11 @@ describe("dist (ESM artefact)", () => {
     expect(offenders, "Node cannot resolve these; run scripts/fix-esm-extensions.mjs").toEqual([]);
   });
 
-  it.runIf(built)("is importable by Node's own ESM resolver", () => {
+  // 30s, not vitest's default 5s. Spawning a Node process that loads the whole
+  // library takes ~2.5s idle and more than 5s when the rest of the estate's
+  // verification is running alongside it — which is exactly when this ran red for
+  // the first time, in `verify.sh`, having passed every time it was run alone.
+  it.runIf(built)("is importable by Node's own ESM resolver", { timeout: 30_000 }, () => {
     // **In a separate process, deliberately.** A dynamic `import()` from inside a
     // test goes through Vite, whose resolver fills in missing extensions — so this
     // written the obvious way passed against a build with every specifier broken.
