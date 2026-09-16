@@ -16,7 +16,7 @@ export interface PaletteCommand {
   title: string;
   subtitle?: string | null;
   group?: string;
-  icon?: React.ComponentType<{ className?: string }> | string | null;
+  icon?: React.ElementType<{ className?: string }> | string | null;
   keywords?: readonly string[];
   /** Display-only keyboard hint, e.g. `"g c"`. */
   shortcut?: string | null;
@@ -140,7 +140,7 @@ export function CommandPalette({
             {idx > 0 && <CommandSeparator />}
             <CommandGroup heading={group.label ?? undefined}>
               {group.commands.map((cmd) => {
-                const Icon = typeof cmd.icon === "function" ? cmd.icon : null;
+                const Icon = renderableIcon(cmd.icon);
                 return (
                   <CommandItem
                     key={cmd.id}
@@ -164,6 +164,16 @@ export function CommandPalette({
       </CommandList>
     </CommandDialog>
   );
+}
+
+/**
+ * Components from `forwardRef` and `memo` are objects, not functions — every
+ * Lucide icon is one — so a `typeof === "function"` check dropped all of them.
+ */
+function renderableIcon(icon: PaletteCommand["icon"]): React.ElementType<{ className?: string }> | null {
+  if (typeof icon === "function") return icon;
+  if (typeof icon === "object" && icon !== null && "$$typeof" in icon) return icon;
+  return null;
 }
 
 interface PaletteGroup {
