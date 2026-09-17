@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { prefetchHandlers } from "../../lib/prefetch";
 import type { AppManifest, AppCategory } from "../../types/app-manifest";
 import type { NotificationItem } from "../../types/notification-item";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
@@ -46,6 +47,8 @@ export interface TopbarProps {
   notificationsPageUrl?: string;
   profileUrl?: string;
   settingsUrl?: string;
+  /** Prefetch an application's page when its tile is hovered or focused. Default `true`. */
+  prefetchOnHover?: boolean;
   className?: string;
 }
 
@@ -83,6 +86,7 @@ export function Topbar({
   notificationsPageUrl,
   profileUrl,
   settingsUrl,
+  prefetchOnHover = true,
   className,
 }: TopbarProps) {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -210,6 +214,7 @@ export function Topbar({
                         <a
                           key={app.id}
                           href={app.url}
+                          {...prefetchHandlers(app.url, prefetchOnHover)}
                           className={cn(
                             "flex items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent group",
                             isActive && "bg-primary/10 ring-1 ring-primary/20"
@@ -277,12 +282,14 @@ export function Topbar({
               notifications.map((notification) => {
                 const NotifIcon = notification.icon;
                 const colorClass = getVariantColors(notification.colorVariant);
+                const Entry = notification.href ? "a" : "button";
                 return (
-                  <div
+                  <Entry
                     key={notification.id}
+                    {...(notification.href ? { href: notification.href } : { type: "button" as const })}
                     onClick={() => onNotificationRead(notification.id)}
                     className={cn(
-                      "flex items-start gap-3 px-4 py-3 cursor-pointer border-b border-border last:border-0 transition-colors",
+                      "flex w-full items-start gap-3 px-4 py-3 text-left cursor-pointer border-b border-border last:border-0 transition-colors no-underline text-foreground",
                       notification.read ? "hover:bg-accent/30" : "hover:bg-accent/50 bg-accent/10"
                     )}
                   >
@@ -297,7 +304,7 @@ export function Topbar({
                         {notification.time}
                       </p>
                     </div>
-                  </div>
+                  </Entry>
                 );
               })
             )}

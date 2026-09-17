@@ -3,6 +3,7 @@ import { Grid3X3, ChevronDown } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../popover";
 import { Button } from "../button";
 import { cn } from "../../lib/utils";
+import { prefetchHandlers } from "../../lib/prefetch";
 import type { AppManifest, AppCategory } from "../../types/app-manifest";
 
 export interface AppSwitcherProps {
@@ -10,6 +11,8 @@ export interface AppSwitcherProps {
   currentAppId: string;
   categories?: AppCategory[];
   triggerClassName?: string;
+  /** Prefetch an application's page when its tile is hovered or focused. Default `true`. */
+  prefetchOnHover?: boolean;
   className?: string;
 }
 
@@ -26,6 +29,7 @@ export function AppSwitcher({
   currentAppId,
   categories,
   triggerClassName,
+  prefetchOnHover = true,
   className,
 }: AppSwitcherProps) {
   const [open, setOpen] = React.useState(false);
@@ -70,6 +74,7 @@ export function AppSwitcher({
                       <a
                         key={app.id}
                         href={app.url}
+                        {...prefetchHandlers(app.url, prefetchOnHover)}
                         onClick={() => setOpen(false)}
                         className={cn(
                           "flex items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors hover:bg-accent group no-underline",

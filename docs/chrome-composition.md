@@ -110,6 +110,20 @@ export function ConnectedShell({ children }) {
 }
 ```
 
+## Moving between applications
+
+Every application is its own page load (ADR-0013), so the chrome does three things to keep that quick:
+
+- **Notifications link to their source.** Give `NotificationItem.href` the notification's `action_url`
+  resolved against the source application's path (`crossAppHref` in `@abeon/sdk-ts/client`). The entry
+  becomes a real link; clicking it still calls `onNotificationRead`.
+- **Application tiles prefetch.** `Topbar` and `AppSwitcher` add `<link rel="prefetch">` for a tile's URL
+  on hover or focus, once per URL, same origin only, never in data-saver mode. Turn it off with
+  `prefetchOnHover={false}`; `prefetchOnce(href)` is exported for other cross-app links.
+- **Nothing blank while loading.** `AppShellSkeleton` has the chrome's proportions for an application
+  that is starting; `PageSkeleton` covers a page whose data is still loading. Both announce themselves
+  once to screen readers and respect reduced motion.
+
 ## Why two providers (next-themes + AbeonProvider) and not one
 
 `next-themes` writes a `class="dark"` to `<html>` *during* the React first

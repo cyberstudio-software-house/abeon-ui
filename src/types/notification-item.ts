@@ -10,4 +10,6 @@ export interface NotificationItem {
   message: string;
   time: string;
   read: boolean;
+  /** Where the notification leads, usually another application (full-page navigation). */
+  href?: string;
 }

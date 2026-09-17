@@ -65,12 +65,14 @@ export function NotificationCenter({
           ) : (
             notifications.map((item) => {
               const ItemIcon = item.icon;
+              const Entry = item.href ? "a" : "button";
               return (
-                <div
+                <Entry
                   key={item.id}
+                  {...(item.href ? { href: item.href } : { type: "button" as const })}
                   onClick={() => onRead(item.id)}
                   className={cn(
-                    "flex items-start gap-3 px-4 py-3 hover:bg-accent/50 transition-colors cursor-pointer border-b border-border last:border-0",
+                    "flex w-full items-start gap-3 px-4 py-3 text-left hover:bg-accent/50 transition-colors cursor-pointer border-b border-border last:border-0 no-underline text-foreground",
                     !item.read && "bg-primary-muted/30"
                   )}
                 >
@@ -87,7 +89,7 @@ export function NotificationCenter({
                     <p className="text-xs text-foreground-muted line-clamp-2">{item.message}</p>
                     <p className="text-xs text-foreground-muted mt-0.5">{item.time}</p>
                   </div>
-                </div>
+                </Entry>
               );
             })
           )}
