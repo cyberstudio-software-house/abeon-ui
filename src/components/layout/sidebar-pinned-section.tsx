@@ -1,13 +1,5 @@
 import * as React from "react";
-import {
-  Pin,
-  PinOff,
-  Pencil,
-  Trash2,
-  Check,
-  X,
-  GripVertical,
-} from "lucide-react";
+import { Pin, Pencil, Trash2, Check, X } from "lucide-react";
 import {
   DndContext,
   KeyboardSensor,
@@ -21,24 +13,21 @@ import {
   SortableContext,
   arrayMove,
   sortableKeyboardCoordinates,
-  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { cn } from "../../lib/utils";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../tooltip";
+import { revealOnHover } from "../../lib/reveal-on-hover";
 import { Input } from "../input";
 import { getIconByName } from "../icon-picker";
+import {
+  CollapsedPinnedItem,
+  SortablePinnedItem,
+  type PinnedItem,
+  type RenderPinnedLink,
+  type ResolvePinnedIcon,
+} from "./pinned-item-row";
 
-export interface PinnedItem {
-  id: string;
-  label: string;
-  href: string;
-  iconName: string;
-  sectionId: string;
-  order: number;
-  isActive?: boolean;
-}
+export type { PinnedItem } from "./pinned-item-row";
 
 export interface PinnedSection {
   id: string;
@@ -52,6 +41,7 @@ export interface SidebarPinnedSectionLabels {
   removeSectionTitle?: string;
   saveLabel?: string;
   cancelLabel?: string;
+  dragHandle?: string;
 }
 
 const defaultLabels: Required<SidebarPinnedSectionLabels> = {
@@ -60,6 +50,7 @@ const defaultLabels: Required<SidebarPinnedSectionLabels> = {
   removeSectionTitle: "Remove section",
   saveLabel: "Save",
   cancelLabel: "Cancel",
+  dragHandle: "Drag to reorder",
 };
 
 export interface SidebarPinnedSectionProps {
@@ -75,18 +66,17 @@ export interface SidebarPinnedSectionProps {
   /** When provided, a remove button appears next to the section header. */
   onRemoveSection?: () => void;
   /** Render a custom link wrapper. Default: a plain `<a href>`. */
-  renderLink?: (props: {
-    href: string;
-    isActive: boolean;
-    className: string;
-    children: React.ReactNode;
-  }) => React.ReactNode;
+  renderLink?: RenderPinnedLink;
   /** Override icon resolution. Default: looks up via IconPicker registry. */
-  resolveIcon?: (iconName: string) => React.ComponentType<{ className?: string }> | undefined;
+  resolveIcon?: ResolvePinnedIcon;
   className?: string;
   labels?: SidebarPinnedSectionLabels;
 }
 
+/**
+ * One section of pins. For several sections, with pins moving between them, use
+ * `SidebarPinnedSections`.
+ */
 export function SidebarPinnedSection({
   section,
   items,
@@ -96,9 +86,7 @@ export function SidebarPinnedSection({
   onRenameSection,
   onRemoveSection,
   renderLink,
-  resolveIcon = getIconByName as (
-    name: string
-  ) => React.ComponentType<{ className?: string }> | undefined,
+  resolveIcon = getIconByName as ResolvePinnedIcon,
   className,
   labels,
 }: SidebarPinnedSectionProps) {
@@ -129,7 +117,10 @@ export function SidebarPinnedSection({
   };
 
   const handleSaveLabel = () => {
-    onRenameSection?.(editLabel);
+    if (editLabel.trim() === "") {
+      return;
+    }
+    onRenameSection?.(editLabel.trim());
     setIsEditing(false);
   };
 
@@ -142,204 +133,89 @@ export function SidebarPinnedSection({
     return null;
   }
 
-  return (
-    <div className={cn("mb-2", className)}>
-      {!collapsed && (
-        <div className="group flex items-center gap-1 px-2 py-1.5">
-          {isEditing ? (
-            <div className="flex items-center gap-1 flex-1">
-              <Input
-                value={editLabel}
-                onChange={(e) => setEditLabel(e.target.value)}
-                className="h-6 text-xs px-2"
-                autoFocus
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") handleSaveLabel();
-                  if (e.key === "Escape") handleCancelEdit();
-                }}
-              />
-              <button
-                onClick={handleSaveLabel}
-                className="p-0.5 hover:bg-sidebar-accent rounded"
-                aria-label={t.saveLabel}
-              >
-                <Check className="h-3.5 w-3.5 text-primary" />
-              </button>
-              <button
-                onClick={handleCancelEdit}
-                className="p-0.5 hover:bg-sidebar-accent rounded"
-                aria-label={t.cancelLabel}
-              >
-                <X className="h-3.5 w-3.5 text-foreground-muted" />
-              </button>
-            </div>
-          ) : (
-            <>
-              <span className="text-xs font-medium uppercase tracking-wider text-foreground-muted flex items-center gap-1.5 px-1">
-                <Pin className="h-3 w-3" />
-                {section.label}
-              </span>
-              <div className="flex-1" />
-              {onRenameSection && (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-sidebar-accent rounded transition-all"
-                  title={t.editSectionTitle}
-                >
-                  <Pencil className="h-3 w-3 text-foreground-muted" />
-                </button>
-              )}
-              {onRemoveSection && (
-                <button
-                  onClick={onRemoveSection}
-                  className="opacity-0 group-hover:opacity-100 p-0.5 hover:bg-sidebar-accent rounded transition-all"
-                  title={t.removeSectionTitle}
-                >
-                  <Trash2 className="h-3 w-3 text-foreground-muted" />
-                </button>
-              )}
-            </>
-          )}
-        </div>
-      )}
-
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext
-          items={items.map((i) => i.id)}
-          strategy={verticalListSortingStrategy}
-        >
-          <div
-            className={cn(
-              "space-y-0.5",
-              collapsed && "flex flex-col items-center"
-            )}
-          >
-            {items.map((item) => (
-              <SortablePinnedItem
-                key={item.id}
-                item={item}
-                collapsed={collapsed}
-                onUnpin={() => onUnpin(item.id)}
-                renderLink={renderLink}
-                resolveIcon={resolveIcon}
-                unpinTitle={t.unpinTitle}
-              />
-            ))}
-          </div>
-        </SortableContext>
-      </DndContext>
-    </div>
-  );
-}
-
-interface SortablePinnedItemProps {
-  item: PinnedItem;
-  collapsed: boolean;
-  onUnpin: () => void;
-  renderLink?: SidebarPinnedSectionProps["renderLink"];
-  resolveIcon: (iconName: string) => React.ComponentType<{ className?: string }> | undefined;
-  unpinTitle: string;
-}
-
-function SortablePinnedItem({
-  item,
-  collapsed,
-  onUnpin,
-  renderLink,
-  resolveIcon,
-  unpinTitle,
-}: SortablePinnedItemProps) {
-  const IconComponent = resolveIcon(item.iconName);
-
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: item.id });
-
-  const style: React.CSSProperties = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  const linkClass = cn(
-    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-    "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
-    item.isActive
-      ? "bg-sidebar-accent text-sidebar-accent-foreground"
-      : "text-sidebar-foreground",
-    collapsed && "justify-center px-0 w-11 h-11"
-  );
-
-  const innerContent = (
-    <>
-      {IconComponent && <IconComponent className="shrink-0 h-[22px] w-[22px]" />}
-      {!collapsed && <span className="flex-1 truncate">{item.label}</span>}
-    </>
-  );
-
-  const linkContent = renderLink ? (
-    renderLink({
-      href: item.href,
-      isActive: !!item.isActive,
-      className: linkClass,
-      children: innerContent,
-    })
-  ) : (
-    <a
-      href={item.href}
-      aria-current={item.isActive ? "page" : undefined}
-      className={linkClass}
-    >
-      {innerContent}
-    </a>
-  );
-
   if (collapsed) {
     return (
-      <div ref={setNodeRef} style={style} {...attributes}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div>{linkContent}</div>
-          </TooltipTrigger>
-          <TooltipContent side="right" sideOffset={8} className="font-medium">
-            {item.label}
-          </TooltipContent>
-        </Tooltip>
+      <div className={cn("mb-2 flex flex-col items-center space-y-0.5", className)}>
+        {items.map((item) => (
+          <CollapsedPinnedItem key={item.id} item={item} renderLink={renderLink} resolveIcon={resolveIcon} />
+        ))}
       </div>
     );
   }
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className={cn("group flex items-center", isDragging && "opacity-50")}
-    >
-      <button
-        {...listeners}
-        {...attributes}
-        className="opacity-0 group-hover:opacity-100 p-1 cursor-grab active:cursor-grabbing"
-        aria-label="Drag to reorder"
-      >
-        <GripVertical className="h-4 w-4 text-foreground-muted" />
-      </button>
-      <div className="flex-1">{linkContent}</div>
-      <button
-        onClick={onUnpin}
-        className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-sidebar-accent transition-all"
-        title={unpinTitle}
-        aria-label={unpinTitle}
-      >
-        <PinOff className="h-4 w-4 text-foreground-muted" />
-      </button>
+    <div className={cn("mb-2", className)}>
+      <div className="group flex items-center gap-1 px-2 py-1.5">
+        {isEditing ? (
+          <div className="flex items-center gap-1 flex-1">
+            <Input
+              value={editLabel}
+              onChange={(e) => setEditLabel(e.target.value)}
+              className="h-6 text-xs px-2"
+              aria-label={t.editSectionTitle}
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSaveLabel();
+                if (e.key === "Escape") handleCancelEdit();
+              }}
+            />
+            <button type="button" onClick={handleSaveLabel} className="p-0.5 hover:bg-sidebar-accent rounded" aria-label={t.saveLabel}>
+              <Check className="h-3.5 w-3.5 text-primary" aria-hidden />
+            </button>
+            <button type="button" onClick={handleCancelEdit} className="p-0.5 hover:bg-sidebar-accent rounded" aria-label={t.cancelLabel}>
+              <X className="h-3.5 w-3.5 text-foreground-muted" aria-hidden />
+            </button>
+          </div>
+        ) : (
+          <>
+            <span className="text-xs font-medium uppercase tracking-wider text-foreground-muted flex items-center gap-1.5 px-1">
+              <Pin className="h-3 w-3" aria-hidden />
+              {section.label}
+            </span>
+            <div className="flex-1" />
+            {onRenameSection && (
+              <button
+                type="button"
+                onClick={() => setIsEditing(true)}
+                className={cn("p-0.5 hover:bg-sidebar-accent rounded", revealOnHover)}
+                title={t.editSectionTitle}
+                aria-label={`${t.editSectionTitle}: ${section.label}`}
+              >
+                <Pencil className="h-3 w-3 text-foreground-muted" aria-hidden />
+              </button>
+            )}
+            {onRemoveSection && (
+              <button
+                type="button"
+                onClick={onRemoveSection}
+                className={cn("p-0.5 hover:bg-sidebar-accent rounded", revealOnHover)}
+                title={t.removeSectionTitle}
+                aria-label={`${t.removeSectionTitle}: ${section.label}`}
+              >
+                <Trash2 className="h-3 w-3 text-foreground-muted" aria-hidden />
+              </button>
+            )}
+          </>
+        )}
+      </div>
+
+      <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <SortableContext items={items.map((i) => i.id)} strategy={verticalListSortingStrategy}>
+          <div className="space-y-0.5">
+            {items.map((item) => (
+              <SortablePinnedItem
+                key={item.id}
+                item={item}
+                onUnpin={() => onUnpin(item.id)}
+                renderLink={renderLink}
+                resolveIcon={resolveIcon}
+                unpinLabel={t.unpinTitle}
+                dragHandleLabel={t.dragHandle}
+              />
+            ))}
+          </div>
+        </SortableContext>
+      </DndContext>
     </div>
   );
 }

@@ -58,7 +58,7 @@ describe("SidebarPinnedSection", () => {
     const { onUnpin } = renderSection({ labels: { unpinTitle: "Odepnij" } });
 
     const rows = screen.getAllByRole("link").map((link) => link.closest(".group") as HTMLElement);
-    fireEvent.click(within(rows[1]!).getByRole("button", { name: "Odepnij" }));
+    fireEvent.click(within(rows[1]!).getByRole("button", { name: /^Odepnij/ }));
 
     expect(onUnpin).toHaveBeenCalledWith("crm.contacts");
   });
@@ -67,8 +67,8 @@ describe("SidebarPinnedSection", () => {
     renderSection({ collapsed: true });
 
     expect(screen.getAllByRole("link")).toHaveLength(2);
-    expect(screen.queryByRole("button", { name: "Unpin" })).toBeNull();
-    expect(screen.queryByRole("button", { name: "Drag to reorder" })).toBeNull();
+    expect(screen.queryAllByRole("button")).toHaveLength(0);
+    expect(document.querySelectorAll("[tabindex]")).toHaveLength(0);
     expect(screen.queryByText("Pinned")).toBeNull();
   });
 });

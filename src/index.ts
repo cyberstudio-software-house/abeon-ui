@@ -99,7 +99,8 @@ export type {
 } from "./components/filter-drawer";
 export { HoverCard, HoverCardContent, HoverCardTrigger } from "./components/hover-card";
 export { IconButton, iconButtonVariants } from "./components/icon-button";
-export { IconPicker, getIconByName, availableIcons } from "./components/icon-picker";
+export { IconPicker, getIconByName, availableIcons, matchesIcon } from "./components/icon-picker";
+export type { IconPickerLabels, IconPickerProps } from "./components/icon-picker";
 export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./components/input-otp";
 export { Input, SearchInput } from "./components/input";
 export { Label } from "./components/label";
@@ -157,6 +158,18 @@ export type {
   PinnedItem,
   PinnedSection,
 } from "./components/layout/sidebar-pinned-section";
+export {
+  SidebarPinnedSections,
+  arrangementOf,
+  layoutOf,
+  moveItem,
+} from "./components/layout/sidebar-pinned-sections";
+export type {
+  SidebarPinnedSectionsProps,
+  SidebarPinnedSectionsLabels,
+  PinnedArrangement,
+  PinnedLayout,
+} from "./components/layout/sidebar-pinned-sections";
 
 export { NavItemActions, PinItemDialog } from "./components/layout/nav-item-actions";
 export type {
@@ -165,6 +178,7 @@ export type {
   PinItemDialogProps,
   PinItemDialogLabels,
   PinItemPayload,
+  PinSectionOption,
 } from "./components/layout/nav-item-actions";
 
 export { Topbar } from "./components/layout/topbar";

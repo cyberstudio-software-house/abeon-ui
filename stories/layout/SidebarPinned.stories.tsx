@@ -9,6 +9,7 @@ import {
   NavItemActions,
   type PinItemPayload,
 } from "../../src/components/layout/nav-item-actions";
+import { SidebarPinnedSections } from "../../src/components/layout/sidebar-pinned-sections";
 import { TooltipProvider } from "../../src/components/tooltip";
 import { Button } from "../../src/components/button";
 
@@ -26,9 +27,9 @@ const sectionProjects: PinnedSection = {
 const initial: PinnedItem[] = [
   { id: "p1", label: "Nowe leady", href: "/crm/leads", iconName: "Star", sectionId: "default", order: 0, isActive: true },
   { id: "p2", label: "Faktury do zapłaty", href: "/finance/invoices", iconName: "Receipt", sectionId: "default", order: 1 },
-  { id: "p3", label: "Helpdesk inbox", href: "/helpdesk", iconName: "Inbox", sectionId: "default", order: 2 },
-  { id: "p4", label: "Migracja CRM", href: "/projects/crm", iconName: "Folder", sectionId: "projects", order: 0 },
-  { id: "p5", label: "Rebranding", href: "/projects/rebrand", iconName: "Palette", sectionId: "projects", order: 1 },
+  { id: "p3", label: "Helpdesk inbox", href: "/helpdesk", iconName: "MessageSquare", sectionId: "default", order: 2 },
+  { id: "p4", label: "Migracja CRM", href: "/projects/crm", iconName: "FolderTree", sectionId: "projects", order: 0 },
+  { id: "p5", label: "Rebranding", href: "/projects/rebrand", iconName: "Star", sectionId: "projects", order: 1 },
 ];
 
 function SidebarFrame({
@@ -208,6 +209,59 @@ export const NavItemActionsDemo: Story = {
           </div>
         )}
       </div>
+    );
+  },
+};
+
+export const SectionsWithDragBetweenThem: Story = {
+  name: "Sections — drag between them, empty section, captions (PL)",
+  render: () => {
+    const [sections, setSections] = React.useState<PinnedSection[]>([
+      sectionDefault,
+      sectionProjects,
+      { id: "empty", label: "Nowa sekcja", order: 2 },
+    ]);
+    const [items, setItems] = React.useState<PinnedItem[]>(
+      initial.map((item) => (item.id === "p2" ? { ...item, caption: "Finanse" } : item))
+    );
+
+    return (
+      <SidebarFrame>
+        <SidebarPinnedSections
+          sections={sections}
+          items={items}
+          onArrange={(arrangement) =>
+            setItems((current) =>
+              arrangement.flatMap(({ id, sectionId, order }) => {
+                const item = current.find((i) => i.id === id);
+                return item ? [{ ...item, sectionId, order }] : [];
+              })
+            )
+          }
+          onUnpin={(id) => setItems((current) => current.filter((i) => i.id !== id))}
+          onAddSection={(label) =>
+            setSections((current) => [...current, { id: `s-${current.length}`, label, order: current.length }])
+          }
+          onRenameSection={(id, label) =>
+            setSections((current) => current.map((s) => (s.id === id ? { ...s, label } : s)))
+          }
+          onRemoveSection={(id) => {
+            setSections((current) => current.filter((s) => s.id !== id));
+            setItems((current) => current.map((i) => (i.sectionId === id ? { ...i, sectionId: "default" } : i)));
+          }}
+          labels={{
+            unpin: "Odepnij",
+            dragHandle: "Przeciągnij",
+            renameSection: "Zmień nazwę sekcji",
+            removeSection: "Usuń sekcję",
+            save: "Zapisz",
+            cancel: "Anuluj",
+            addSection: "Dodaj sekcję",
+            newSectionPlaceholder: "Nazwa sekcji",
+            emptySectionHint: "Przeciągnij tu pinezkę",
+          }}
+        />
+      </SidebarFrame>
     );
   },
 };

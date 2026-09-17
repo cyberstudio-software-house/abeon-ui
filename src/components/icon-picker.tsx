@@ -131,23 +131,46 @@ const availableIcons: IconOption[] = [
   { name: "Receipt", icon: Receipt, keywords: ["paragon", "faktura", "rachunek"] },
 ];
 
-interface IconPickerProps {
+export interface IconPickerLabels {
+  trigger?: string;
+  searchPlaceholder?: string;
+  searchLabel?: string;
+  empty?: string;
+}
+
+const defaultIconPickerLabels: Required<IconPickerLabels> = {
+  trigger: "Wybierz ikonę",
+  searchPlaceholder: "Szukaj ikony...",
+  searchLabel: "Szukaj ikony",
+  empty: "Nie znaleziono ikon",
+};
+
+export interface IconPickerProps {
   value?: string;
   onChange: (iconName: string) => void;
   trigger?: React.ReactNode;
+  labels?: IconPickerLabels;
 }
 
-export function IconPicker({ value, onChange, trigger }: IconPickerProps) {
+/** Lower case without diacritics, so "uzytkownik" finds "użytkownik" — people type Polish without them. */
+function normalise(text: string): string {
+  return text.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "").replace(/ł/g, "l");
+}
+
+export function matchesIcon(icon: { name: string; keywords: string[] }, search: string): boolean {
+  const query = normalise(search.trim());
+  if (query === "") {
+    return true;
+  }
+  return normalise(icon.name).includes(query) || icon.keywords.some((kw) => normalise(kw).includes(query));
+}
+
+export function IconPicker({ value, onChange, trigger, labels }: IconPickerProps) {
+  const t = { ...defaultIconPickerLabels, ...labels };
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
-  const filteredIcons = availableIcons.filter((icon) => {
-    const searchLower = search.toLowerCase();
-    return (
-      icon.name.toLowerCase().includes(searchLower) ||
-      icon.keywords.some((kw) => kw.includes(searchLower))
-    );
-  });
+  const filteredIcons = availableIcons.filter((icon) => matchesIcon(icon, search));
 
   const selectedIcon = availableIcons.find((i) => i.name === value);
   const SelectedIconComponent = selectedIcon?.icon;
@@ -162,22 +185,23 @@ export function IconPicker({ value, onChange, trigger }: IconPickerProps) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         {trigger || (
-          <Button variant="outline" size="sm" className="gap-2">
+          <Button type="button" variant="outline" size="sm" className="gap-2">
             {SelectedIconComponent ? (
-              <SelectedIconComponent className="h-4 w-4" />
+              <SelectedIconComponent className="h-4 w-4" aria-hidden />
             ) : (
-              <Star className="h-4 w-4" />
+              <Star className="h-4 w-4" aria-hidden />
             )}
-            <span>Wybierz ikonę</span>
+            <span>{t.trigger}</span>
           </Button>
         )}
       </PopoverTrigger>
       <PopoverContent className="w-72 p-0" align="start">
         <div className="p-3 border-b border-border">
           <div className="relative">
-            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground-muted" />
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-foreground-muted" aria-hidden />
             <Input
-              placeholder="Szukaj ikony..."
+              placeholder={t.searchPlaceholder}
+              aria-label={t.searchLabel}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-9 h-9"
@@ -188,25 +212,27 @@ export function IconPicker({ value, onChange, trigger }: IconPickerProps) {
           <div className="grid grid-cols-6 gap-1 p-2">
             {filteredIcons.map((iconOption) => {
               const IconComponent = iconOption.icon;
+              const selected = value === iconOption.name;
               return (
                 <button
+                  type="button"
                   key={iconOption.name}
                   onClick={() => handleSelect(iconOption.name)}
                   className={cn(
                     "flex items-center justify-center h-9 w-9 rounded-lg hover:bg-accent transition-colors",
-                    value === iconOption.name && "bg-primary text-primary-foreground hover:bg-primary"
+                    selected && "bg-primary text-primary-foreground hover:bg-primary"
                   )}
                   title={iconOption.name}
+                  aria-label={iconOption.name}
+                  aria-pressed={selected}
                 >
-                  <IconComponent className="h-4 w-4" />
+                  <IconComponent className="h-4 w-4" aria-hidden />
                 </button>
               );
             })}
           </div>
           {filteredIcons.length === 0 && (
-            <p className="text-sm text-foreground-muted text-center py-6">
-              Nie znaleziono ikon
-            </p>
+            <p className="text-sm text-foreground-muted text-center py-6">{t.empty}</p>
           )}
         </ScrollArea>
       </PopoverContent>

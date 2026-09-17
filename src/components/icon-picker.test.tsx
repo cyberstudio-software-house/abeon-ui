@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { availableIcons, getIconByName } from "./icon-picker";
+import { availableIcons, getIconByName, matchesIcon } from "./icon-picker";
 
 /**
  * Whether a value is something React can render as a component.
@@ -94,4 +94,19 @@ describe("getIconByName", () => {
 
         expect(names.length).toBe(new Set(names).size);
     });
+});
+
+describe("matchesIcon", () => {
+  const users = { name: "Users", keywords: ["użytkownicy", "zespół", "grupa"] };
+
+  it("finds Polish keywords typed without diacritics", () => {
+    expect(matchesIcon(users, "uzytkownicy")).toBe(true);
+    expect(matchesIcon(users, "zespol")).toBe(true);
+  });
+
+  it("still matches the Lucide name and exact keywords, case-insensitively", () => {
+    expect(matchesIcon(users, "USERS")).toBe(true);
+    expect(matchesIcon(users, "Zespół")).toBe(true);
+    expect(matchesIcon(users, "kalendarz")).toBe(false);
+  });
 });
