@@ -50,7 +50,7 @@ export default async function RootLayout({ children }) {
 ```tsx
 'use client';
 import { useState } from 'react';
-import { useAuth, useApps, useAppOrder, useNotifications } from '@abeon/sdk-ts/react';
+import { useAuth, useApps, useNotifications } from '@abeon/sdk-ts/react';
 import { crossAppHref } from '@abeon/sdk-ts/client';
 import {
   AppShell, AppSidebar, Topbar,
@@ -66,11 +66,10 @@ export function ConnectedShell({ children }) {
 
   const { user } = useAuth();
   const { apps } = useApps();
-  const { order } = useAppOrder();
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
 
-  // Map AppDescriptor[] → AppManifest[] (UI shape)
-  const manifest = mapDescriptorsToManifests(apps, order);
+  // Map AppDescriptor[] → AppManifest[] (UI shape), in catalogue order
+  const manifest = mapDescriptorsToManifests(apps);
 
   return (
     <AppShell
