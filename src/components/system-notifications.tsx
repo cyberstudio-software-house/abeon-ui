@@ -64,7 +64,6 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 
       setNotifications((prev) => [newNotification, ...prev]);
 
-      // Auto-dismiss after duration (default 5s for non-loading, 0 for loading)
       const duration = notification.duration ?? (notification.type === "loading" ? 0 : 5000);
       if (duration > 0) {
         setTimeout(() => {
@@ -241,7 +240,6 @@ export function SystemNotificationPanel() {
   );
 }
 
-// Convenience hooks for common notification types
 export function useNotify() {
   const { addNotification, updateNotification, removeNotification } = useSystemNotifications();
 

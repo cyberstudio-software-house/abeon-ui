@@ -41,7 +41,6 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 );
 CardFooter.displayName = "CardFooter";
 
-// Extended stat card for dashboards
 interface StatCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
   label: string;
   value: string | number;

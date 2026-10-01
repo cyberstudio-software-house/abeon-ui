@@ -268,10 +268,8 @@ function A4PageView({ editor, zoom }: { editor: Editor; zoom: number }) {
 
   useEffect(() => {
     measurePages();
-    // Re-measure on every editor update
     const handler = () => measurePages();
     editor.on("update", handler);
-    // Also measure on resize
     const ro = new ResizeObserver(handler);
     if (contentRef.current) {
       const tiptap = contentRef.current.querySelector(".tiptap");

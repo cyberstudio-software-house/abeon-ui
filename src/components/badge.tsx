@@ -29,7 +29,6 @@ function Badge({ className, variant, ...props }: BadgeProps) {
   return <div className={cn(badgeVariants({ variant }), className)} {...props} />;
 }
 
-// Status badge with predefined states
 interface StatusBadgeProps extends Omit<BadgeProps, "variant"> {
   status: "active" | "inactive" | "draft" | "pending" | "completed" | "error" | "archived";
 }

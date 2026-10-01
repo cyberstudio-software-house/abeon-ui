@@ -4,7 +4,6 @@ import { cn } from "../lib/utils";
 import { Button } from "./button";
 import { Card, CardContent } from "./card";
 
-// ─── DetailPanel (the shell) ─────────────────────────
 
 export interface DetailPanelProps {
   open?: boolean;
@@ -64,7 +63,6 @@ export function DetailPanel({
   );
 }
 
-// ─── DetailHeader ────────────────────────────────────
 
 export interface DetailHeaderProps {
   icon?: React.ReactNode;
@@ -130,7 +128,6 @@ export function DetailHeader({
   );
 }
 
-// ─── DetailSection ───────────────────────────────────
 
 export interface DetailSectionProps {
   icon?: React.ReactNode;
@@ -169,7 +166,6 @@ export function DetailSection({
   );
 }
 
-// ─── DetailMetricGrid + DetailMetric ─────────────────
 
 export interface DetailMetricGridProps {
   columns?: 2 | 3 | 4;
@@ -249,7 +245,6 @@ export function DetailMetric({
   );
 }
 
-// ─── DetailKeyValue ──────────────────────────────────
 
 export interface DetailKeyValueProps {
   label: React.ReactNode;
@@ -281,7 +276,6 @@ export function DetailKeyValue({
   );
 }
 
-// ─── DetailBody ──────────────────────────────────────
 
 export interface DetailBodyProps {
   className?: string;

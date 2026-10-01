@@ -28,7 +28,6 @@ import {
   SelectValue,
 } from "./select";
 
-// ─── Types ───────────────────────────────────────────
 
 export interface AIOutlineItem {
   id: string;
@@ -49,7 +48,6 @@ export interface AIGenerateResult {
   meta?: Record<string, unknown>;
 }
 
-// ─── AIGenerateDialog ────────────────────────────────
 
 export interface AIGenerateDialogLabels {
   titlePrompt?: string;
@@ -423,7 +421,6 @@ export function AIGenerateDialog<
   );
 }
 
-// ─── AITextToolbar ───────────────────────────────────
 
 export interface AITextAction {
   id: string;
