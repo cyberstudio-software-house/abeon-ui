@@ -275,7 +275,7 @@ export function DataTable<T extends { id: string | number }>({
   };
 
   const densityClasses: Record<DataTableDensity, string> = {
-    compact: "h-8 text-xs",
+    compact: "h-9 px-3 py-1.5 text-sm",
     normal: "h-10 text-sm",
     comfortable: "h-12 text-sm",
   };
@@ -437,7 +437,7 @@ export function DataTable<T extends { id: string | number }>({
               <TableRow className="hover:bg-transparent">
                 {selectable && <TableHead className="w-12" />}
                 {filteredColumns.map((column) => (
-                  <TableHead key={`filter-${column.id}`} className="py-2">
+                  <TableHead key={`filter-${column.id}`} className={density === "compact" ? "h-auto px-3 py-1" : "py-2"}>
                     {column.filterable ? (
                       <input
                         type="text"
