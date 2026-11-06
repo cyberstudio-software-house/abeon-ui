@@ -1,11 +1,10 @@
 import { describe, expect, it, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { TooltipProvider } from "./tooltip";
 import { RowActions } from "./row-actions";
 import { Field } from "./field";
 import { Input } from "./input";
 
-const wrap = (node: React.ReactNode) => render(<TooltipProvider>{node}</TooltipProvider>);
+const wrap = (node: React.ReactNode) => render(<>{node}</>);
 
 describe("RowActions", () => {
   it("renders the edit pencil as the given link and the rest behind the menu", async () => {
