@@ -63,6 +63,17 @@ import {
   Check,
   TriangleAlert,
   AlertTriangle,
+  Pencil,
+  Trash2,
+  MoreHorizontal,
+  ArrowUp,
+  ArrowDown,
+  Move,
+  Copy,
+  Eye,
+  Inbox,
+  Send,
+  KeyRound,
 } from "lucide-react";
 
 interface IconOption {
@@ -129,6 +140,17 @@ const availableIcons: IconOption[] = [
   { name: "DollarSign", icon: DollarSign, keywords: ["dolar", "pieniądze", "cena"] },
   { name: "Wallet", icon: Wallet, keywords: ["portfel", "płatność", "finanse"] },
   { name: "Receipt", icon: Receipt, keywords: ["paragon", "faktura", "rachunek"] },
+  { name: "Pencil", icon: Pencil, keywords: ["edytuj", "edycja", "zmień"] },
+  { name: "Trash2", icon: Trash2, keywords: ["usuń", "kosz"] },
+  { name: "MoreHorizontal", icon: MoreHorizontal, keywords: ["więcej", "menu", "akcje"] },
+  { name: "ArrowUp", icon: ArrowUp, keywords: ["w górę", "wyżej"] },
+  { name: "ArrowDown", icon: ArrowDown, keywords: ["w dół", "niżej"] },
+  { name: "Move", icon: Move, keywords: ["przenieś", "przesuń"] },
+  { name: "Copy", icon: Copy, keywords: ["kopiuj", "duplikuj"] },
+  { name: "Eye", icon: Eye, keywords: ["podgląd", "zobacz"] },
+  { name: "Inbox", icon: Inbox, keywords: ["zgłoszenia", "skrzynka"] },
+  { name: "Send", icon: Send, keywords: ["wyślij", "test"] },
+  { name: "KeyRound", icon: KeyRound, keywords: ["klucz", "sekret", "hasło"] },
 ];
 
 export interface IconPickerLabels {

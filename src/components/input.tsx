@@ -4,6 +4,8 @@ import { cn } from "../lib/utils";
 
 export interface InputProps extends React.ComponentProps<"input"> {
   error?: boolean;
+  /** Smaller control for dense forms: `h-8`, tighter padding. */
+  compact?: boolean;
   leadingIcon?: React.ReactNode;
   trailingIcon?: React.ReactNode;
   onClear?: () => void;
@@ -15,6 +17,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       className,
       type,
       error,
+      compact,
       leadingIcon,
       trailingIcon,
       onClear,
@@ -36,6 +39,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const inputClasses = cn(
       "flex h-9 w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+      compact && "h-8 rounded-md px-2.5 py-1",
       error && "border-destructive focus-visible:ring-destructive",
       leadingIcon && "pl-9",
       (showClear || showTrailing) && "pr-9",

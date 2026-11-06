@@ -99,10 +99,14 @@ export type {
 } from "./components/filter-drawer";
 export { HoverCard, HoverCardContent, HoverCardTrigger } from "./components/hover-card";
 export { IconButton, iconButtonVariants } from "./components/icon-button";
+export { RowActions } from "./components/row-actions";
+export type { RowAction, RowActionsProps } from "./components/row-actions";
 export { IconPicker, getIconByName, availableIcons, matchesIcon } from "./components/icon-picker";
 export type { IconPickerLabels, IconPickerProps } from "./components/icon-picker";
 export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./components/input-otp";
 export { Input, SearchInput } from "./components/input";
+export { Field } from "./components/field";
+export type { FieldProps } from "./components/field";
 export { Label } from "./components/label";
 export { Menubar, MenubarCheckboxItem, MenubarContent, MenubarGroup, MenubarItem, MenubarLabel, MenubarMenu, MenubarPortal, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from "./components/menubar";
 export { MultiSelect } from "./components/multi-select";
