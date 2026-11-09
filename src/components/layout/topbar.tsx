@@ -34,6 +34,9 @@ export interface TopbarUser {
 export interface TopbarProps {
   apps: AppManifest[];
   currentAppId: string;
+  /** Why the list is empty, when it is empty because something failed rather than because there is nothing. */
+  appsError?: string | null;
+  onAppsRetry?: () => void;
   appCategories?: AppCategory[];
   notifications: NotificationItem[];
   unreadCount: number;
@@ -74,6 +77,8 @@ export function Topbar({
   apps,
   currentAppId,
   appCategories,
+  appsError = null,
+  onAppsRetry,
   notifications,
   unreadCount,
   user,
@@ -93,6 +98,7 @@ export function Topbar({
   const [searchQuery, setSearchQuery] = useState("");
 
   const categories = appCategories && appCategories.length > 0 ? appCategories : defaultCategories;
+  const currentApp = apps.find((app) => app.id === currentAppId);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -187,17 +193,39 @@ export function Topbar({
 
       <Popover>
         <PopoverTrigger asChild>
-          <button className="hidden md:flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm text-foreground hover:bg-accent transition-colors">
+          <button
+            aria-label={currentApp ? `Aplikacja: ${currentApp.name}. Przełącz aplikację.` : "Przełącz aplikację"}
+            className="hidden md:flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm text-foreground hover:bg-accent transition-colors"
+          >
             <Grid3X3 className="h-4 w-4" />
+            {currentApp && (
+              <span className="max-w-[12rem] truncate font-medium">{currentApp.name}</span>
+            )}
             <ChevronDown className="h-3 w-3" />
           </button>
         </PopoverTrigger>
         <PopoverContent align="end" className="w-[640px] p-0" sideOffset={8}>
           <div className="px-4 py-3 border-b border-border">
             <h4 className="font-semibold text-sm">Aplikacje</h4>
-            <p className="text-xs text-muted-foreground">Przełącz na wybraną aplikację</p>
+            <p className="text-xs text-muted-foreground">
+              {currentApp ? `Jesteś w: ${currentApp.name}` : "Przełącz na wybraną aplikację"}
+            </p>
           </div>
           <div className="p-3 max-h-[480px] overflow-y-auto">
+            {apps.length === 0 && (
+              <div className="px-3 py-6 text-center text-sm text-muted-foreground">
+                <p>{appsError ?? "Nie masz dostępu do żadnej innej aplikacji."}</p>
+                {appsError && onAppsRetry && (
+                  <button
+                    type="button"
+                    onClick={onAppsRetry}
+                    className="mt-2 text-sm font-medium text-foreground underline underline-offset-4"
+                  >
+                    Spróbuj ponownie
+                  </button>
+                )}
+              </div>
+            )}
             {categories.map((category) => {
               const categoryApps = getAppsForCategory(category);
               if (categoryApps.length === 0) return null;

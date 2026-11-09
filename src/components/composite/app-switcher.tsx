@@ -34,6 +34,7 @@ export function AppSwitcher({
 }: AppSwitcherProps) {
   const [open, setOpen] = React.useState(false);
   const resolvedCategories = categories ?? DEFAULT_CATEGORIES;
+  const currentApp = apps.find((app) => app.id === currentAppId);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -41,9 +42,13 @@ export function AppSwitcher({
         <Button
           variant="ghost"
           size="sm"
+          aria-label={currentApp ? `Aplikacja: ${currentApp.name}. Przełącz aplikację.` : "Przełącz aplikację"}
           className={cn("gap-2", triggerClassName)}
         >
           <Grid3X3 className="h-4 w-4" />
+          {currentApp && (
+            <span className="max-w-[12rem] truncate font-medium">{currentApp.name}</span>
+          )}
           <ChevronDown className="h-3 w-3" />
         </Button>
       </PopoverTrigger>
@@ -54,7 +59,9 @@ export function AppSwitcher({
       >
         <div className="px-4 py-3 border-b border-border">
           <h4 className="font-semibold text-sm">Aplikacje</h4>
-          <p className="text-xs text-foreground-muted">Przełącz na wybraną aplikację</p>
+          <p className="text-xs text-foreground-muted">
+            {currentApp ? `Jesteś w: ${currentApp.name}` : "Przełącz na wybraną aplikację"}
+          </p>
         </div>
         <div className="p-3 max-h-[480px] overflow-y-auto">
           {resolvedCategories.map((cat) => {
