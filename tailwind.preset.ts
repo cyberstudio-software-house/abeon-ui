@@ -23,9 +23,10 @@ const preset: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
+        sans: ["Inter Variable", "Inter", "system-ui", "sans-serif"],
       },
       fontSize: {
+        "2xs": ["11px", { lineHeight: "14px" }],
         "xs": ["12px", { lineHeight: "16px" }],
         "sm": ["13px", { lineHeight: "18px" }],
         "base": ["14px", { lineHeight: "20px" }],
@@ -52,6 +53,9 @@ const preset: Config = {
         "sidebar": "260px",
         "sidebar-collapsed": "72px",
         "topbar": "56px",
+      },
+      borderColor: {
+        DEFAULT: "hsl(var(--border))",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -144,11 +148,16 @@ const preset: Config = {
         xl: "calc(var(--radius) + 4px)",
       },
       boxShadow: {
-        "sm": "0 1px 2px 0 hsl(var(--foreground) / 0.03)",
-        "md": "0 2px 8px -2px hsl(var(--foreground) / 0.06), 0 1px 2px -1px hsl(var(--foreground) / 0.03)",
-        "lg": "0 4px 16px -4px hsl(var(--foreground) / 0.08), 0 2px 4px -2px hsl(var(--foreground) / 0.04)",
-        "dropdown": "0 4px 24px -4px hsl(var(--foreground) / 0.12), 0 2px 8px -2px hsl(var(--foreground) / 0.06)",
-        "modal": "0 16px 48px -8px hsl(var(--foreground) / 0.16), 0 4px 16px -4px hsl(var(--foreground) / 0.08)",
+        "sm": "0 1px 2px 0 hsl(var(--shadow-color) / calc(0.03 * var(--shadow-strength)))",
+        "md": "0 2px 8px -2px hsl(var(--shadow-color) / calc(0.06 * var(--shadow-strength))), 0 1px 2px -1px hsl(var(--shadow-color) / calc(0.03 * var(--shadow-strength)))",
+        "lg": "0 4px 16px -4px hsl(var(--shadow-color) / calc(0.08 * var(--shadow-strength))), 0 2px 4px -2px hsl(var(--shadow-color) / calc(0.04 * var(--shadow-strength)))",
+        "dropdown": "0 4px 24px -4px hsl(var(--shadow-color) / calc(0.12 * var(--shadow-strength))), 0 2px 8px -2px hsl(var(--shadow-color) / calc(0.06 * var(--shadow-strength)))",
+        "modal": "0 16px 48px -8px hsl(var(--shadow-color) / calc(0.16 * var(--shadow-strength))), 0 4px 16px -4px hsl(var(--shadow-color) / calc(0.08 * var(--shadow-strength)))",
+      },
+      transitionTimingFunction: {
+        out: "cubic-bezier(0.23, 1, 0.32, 1)",
+        "in-out": "cubic-bezier(0.77, 0, 0.175, 1)",
+        drawer: "cubic-bezier(0.32, 0.72, 0, 1)",
       },
       keyframes: {
         "accordion-down": {
@@ -192,9 +201,9 @@ const preset: Config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "fade-in": "fade-in 0.2s ease-out",
-        "fade-out": "fade-out 0.15s ease-in",
+        "fade-out": "fade-out 0.15s ease-out",
         "slide-in-from-right": "slide-in-from-right 0.25s ease-out",
-        "slide-out-to-right": "slide-out-to-right 0.2s ease-in",
+        "slide-out-to-right": "slide-out-to-right 0.2s ease-out",
         "slide-in-from-bottom": "slide-in-from-bottom 0.2s ease-out",
         "scale-in": "scale-in 0.15s ease-out",
         "shimmer": "shimmer 2s infinite linear",
