@@ -62,14 +62,14 @@ const defaultCategories: AppCategory[] = [
 function getVariantColors(variant: NotificationItem["colorVariant"]): string {
   switch (variant) {
     case "success":
-      return "bg-success/10 text-success";
+      return "bg-success-muted text-success-muted-foreground";
     case "warning":
-      return "bg-warning/10 text-warning";
+      return "bg-warning-muted text-warning-muted-foreground";
     case "danger":
-      return "bg-danger/10 text-danger";
+      return "bg-danger-muted text-danger-muted-foreground";
     case "primary":
     default:
-      return "bg-primary/10 text-primary";
+      return "bg-primary-muted text-primary-muted-foreground";
   }
 }
 
@@ -115,14 +115,14 @@ export function Topbar({
   return (
     <header
       className={cn(
-        "fixed top-0 right-0 z-30 flex h-topbar items-center gap-2 md:gap-4 border-b border-border bg-background px-3 md:px-4 transition-all duration-200",
+        "fixed top-0 right-0 z-30 flex h-topbar items-center gap-2 md:gap-4 border-b border-border bg-background px-3 md:px-4 transition-[left] duration-200 motion-reduce:transition-none",
         "left-0 md:left-sidebar",
         sidebarCollapsed && "md:left-sidebar-collapsed",
         className
       )}
     >
       <button
-        className="inline-flex md:hidden items-center justify-center rounded-lg h-8 w-8 text-foreground hover:bg-accent transition-colors"
+        className="inline-flex md:hidden items-center justify-center rounded-lg h-8 w-8 text-foreground hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         onClick={onMenuOpen}
         aria-label="Open menu"
       >
@@ -132,7 +132,7 @@ export function Topbar({
       <Popover open={searchOpen} onOpenChange={setSearchOpen}>
         <PopoverTrigger asChild>
           <button
-            className="hidden md:flex items-center gap-2 h-9 w-80 rounded-md border border-input bg-transparent px-3 text-sm text-muted-foreground hover:bg-accent transition-colors"
+            className="hidden md:flex items-center gap-2 h-9 w-80 rounded-md border border-input bg-transparent px-3 text-sm text-muted-foreground hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Search className="h-4 w-4 shrink-0" />
             <span className="flex-1 text-left">Szukaj...</span>
@@ -166,7 +166,7 @@ export function Topbar({
       <Popover>
         <PopoverTrigger asChild>
           <button
-            className="inline-flex md:hidden items-center justify-center rounded-lg h-8 w-8 text-foreground hover:bg-accent transition-colors"
+            className="inline-flex md:hidden items-center justify-center rounded-lg h-8 w-8 text-foreground hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Search"
           >
             <Search className="h-5 w-5" />
@@ -195,7 +195,7 @@ export function Topbar({
         <PopoverTrigger asChild>
           <button
             aria-label={currentApp ? `Aplikacja: ${currentApp.name}. Przełącz aplikację.` : "Przełącz aplikację"}
-            className="hidden md:flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm text-foreground hover:bg-accent transition-colors"
+            className="hidden md:flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm text-foreground hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Grid3X3 className="h-4 w-4" />
             {currentApp && (
@@ -278,7 +278,7 @@ export function Topbar({
       <Popover>
         <PopoverTrigger asChild>
           <button
-            className="relative inline-flex items-center justify-center rounded-lg h-8 w-8 text-foreground hover:bg-accent transition-colors"
+            className="relative inline-flex items-center justify-center rounded-lg h-8 w-8 text-foreground hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             aria-label="Notifications"
           >
             <Bell className="h-4 w-4" />
@@ -353,8 +353,8 @@ export function Topbar({
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-1 md:gap-2 px-1 md:px-2 rounded-lg hover:bg-accent transition-colors">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+          <button className="flex items-center gap-1 md:gap-2 px-1 md:px-2 rounded-lg hover:bg-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-muted text-sm font-medium text-primary-muted-foreground">
               {user.initials}
             </div>
             <ChevronDown className="h-3 w-3 hidden md:block text-foreground" />

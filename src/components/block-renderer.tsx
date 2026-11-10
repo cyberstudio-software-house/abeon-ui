@@ -94,7 +94,7 @@ export function BlockRenderer<B extends BlockBase>({
             key={block.id}
             onClick={handleClick}
             className={cn(
-              "relative transition-all",
+              "relative transition-shadow",
               onBlockClick && "cursor-pointer hover:ring-2 hover:ring-primary/30",
               isSelected && "ring-2 ring-primary"
             )}

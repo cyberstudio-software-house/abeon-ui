@@ -207,11 +207,11 @@ export function DetailMetric({
 }: DetailMetricProps) {
   const valueClass =
     tone === "danger"
-      ? "text-destructive"
+      ? "text-danger-muted-foreground"
       : tone === "success"
-      ? "text-success"
+      ? "text-success-muted-foreground"
       : tone === "warning"
-      ? "text-warning"
+      ? "text-warning-muted-foreground"
       : "text-foreground";
 
   return (
@@ -222,13 +222,13 @@ export function DetailMetric({
       {trend && (
         <div className="mt-1 text-xs">
           {trend.direction === "up" && (
-            <span className="inline-flex items-center gap-0.5 text-success font-medium">
+            <span className="inline-flex items-center gap-0.5 text-success-muted-foreground font-medium">
               <ArrowUpRight className="h-3.5 w-3.5" />
               {trend.value}
             </span>
           )}
           {trend.direction === "down" && (
-            <span className="inline-flex items-center gap-0.5 text-destructive font-medium">
+            <span className="inline-flex items-center gap-0.5 text-danger-muted-foreground font-medium">
               <ArrowDownRight className="h-3.5 w-3.5" />
               {trend.value}
             </span>

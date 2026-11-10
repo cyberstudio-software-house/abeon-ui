@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUp, Minus } from "lucide-react";
 import { cn } from "../lib/utils";
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)} {...props} />
+  <div ref={ref} className={cn("rounded-lg border bg-card text-card-foreground", className)} {...props} />
 ));
 Card.displayName = "Card";
 
@@ -15,9 +15,9 @@ const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 );
 CardHeader.displayName = "CardHeader";
 
-const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLHeadingElement>>(
-  ({ className, ...props }, ref) => (
-    <h3 ref={ref} className={cn("text-2xl font-semibold leading-none tracking-tight", className)} {...props} />
+const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement> & { as?: "h2" | "h3" | "h4" }>(
+  ({ className, as: Tag = "h2", ...props }, ref) => (
+    <Tag ref={ref} className={cn("text-base font-semibold leading-tight", className)} {...props} />
   ),
 );
 CardTitle.displayName = "CardTitle";
@@ -62,8 +62,8 @@ const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
               <p
                 className={cn(
                   "flex items-center gap-1 text-xs",
-                  direction === "up" && "text-green-600 dark:text-green-400",
-                  direction === "down" && "text-red-600 dark:text-red-400",
+                  direction === "up" && "text-success-muted-foreground",
+                  direction === "down" && "text-danger-muted-foreground",
                   direction === "flat" && "text-muted-foreground",
                 )}
               >

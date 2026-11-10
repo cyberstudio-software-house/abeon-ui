@@ -309,7 +309,7 @@ export function AIGenerateDialog<
 
             {hasExistingContent && (
               <div className="rounded-lg border border-warning/30 bg-warning/10 p-3">
-                <p className="text-xs text-warning">{t.overwriteWarning}</p>
+                <p className="text-xs text-warning-muted-foreground">{t.overwriteWarning}</p>
               </div>
             )}
           </div>
@@ -359,7 +359,7 @@ export function AIGenerateDialog<
         {step === "generating" && (
           <div className="py-8 space-y-4">
             <div className="flex items-center justify-center mb-2">
-              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center animate-pulse">
+              <div className="h-12 w-12 rounded-2xl bg-primary/10 flex items-center justify-center animate-pulse motion-reduce:animate-none">
                 <Sparkles className="h-6 w-6 text-primary" />
               </div>
             </div>
@@ -469,7 +469,7 @@ export function AITextToolbar({
   return (
     <div
       className={cn(
-        "fixed z-50 bg-popover border border-border shadow-lg rounded-xl p-1 flex items-center gap-0.5 animate-in fade-in slide-in-from-bottom-2",
+        "fixed z-50 bg-popover border border-border shadow-lg rounded-xl p-1 flex items-center gap-0.5 animate-in fade-in duration-100",
         className
       )}
       style={{ top: position.top, left: position.left }}

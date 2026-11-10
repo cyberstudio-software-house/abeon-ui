@@ -10,17 +10,19 @@ export interface PageHeaderProps
   titleAs?: HeadingTag;
   description?: React.ReactNode;
   actions?: React.ReactNode;
+  back?: React.ReactNode;
 }
 
 const PageHeader = React.forwardRef<HTMLElement, PageHeaderProps>(
-  ({ title, titleAs: TitleTag = "h1", description, actions, className, ...props }, ref) => (
+  ({ title, titleAs: TitleTag = "h1", description, actions, back, className, ...props }, ref) => (
     <header
       ref={ref}
-      className={cn("mb-6 flex items-start justify-between gap-4", className)}
+      className={cn("mb-6 flex flex-wrap items-start justify-between gap-4", className)}
       {...props}
     >
-      <div className="space-y-1">
-        <TitleTag className="text-2xl font-semibold text-foreground">{title}</TitleTag>
+      <div className="min-w-0 space-y-1">
+        {back != null && <div>{back}</div>}
+        <TitleTag className="break-words text-balance text-2xl font-semibold text-foreground">{title}</TitleTag>
         {description != null && (
           <div className="text-sm text-foreground-muted">{description}</div>
         )}

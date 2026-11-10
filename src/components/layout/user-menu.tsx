@@ -79,7 +79,7 @@ export function UserMenu({
               className="h-7 w-7 rounded-full object-cover"
             />
           ) : (
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary-muted text-sm font-medium text-primary-muted-foreground">
               {user.initials}
             </div>
           )}

@@ -64,9 +64,9 @@ const textVariants = cva("", {
       muted: "text-foreground-muted",
       placeholder: "text-foreground-placeholder",
       primary: "text-primary",
-      danger: "text-danger",
-      success: "text-success",
-      warning: "text-warning",
+      danger: "text-danger-muted-foreground",
+      success: "text-success-muted-foreground",
+      warning: "text-warning-muted-foreground",
     },
     weight: {
       regular: "font-normal",

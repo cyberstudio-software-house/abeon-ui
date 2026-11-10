@@ -15,14 +15,22 @@ export interface FieldProps {
 
 /** A label, a control and its message, laid out tightly for dense forms. */
 function Field({ id, label, hint, error, className, children }: FieldProps) {
+  const errorId = `${id}-error`;
+  const control =
+    error && React.isValidElement<Record<string, unknown>>(children)
+      ? React.cloneElement(children, {
+          "aria-invalid": true,
+          "aria-describedby": [children.props["aria-describedby"], errorId].filter(Boolean).join(" "),
+        })
+      : children;
   return (
     <div className={cn("grid gap-1", className)}>
       <Label htmlFor={id} className="text-xs font-medium text-foreground-secondary">
         {label}
       </Label>
-      {children}
+      {control}
       {error ? (
-        <p id={`${id}-error`} className="text-xs text-destructive">
+        <p id={errorId} role="alert" className="text-xs text-destructive">
           {error}
         </p>
       ) : hint ? (

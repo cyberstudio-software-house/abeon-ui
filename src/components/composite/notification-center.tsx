@@ -15,9 +15,9 @@ export interface NotificationCenterProps {
 }
 
 const variantColors: Record<NotificationColorVariant, string> = {
-  success: "bg-success-muted text-success",
-  warning: "bg-warning-muted text-warning",
-  danger: "bg-danger-muted text-danger",
+  success: "bg-success-muted text-success-muted-foreground",
+  warning: "bg-warning-muted text-warning-muted-foreground",
+  danger: "bg-danger-muted text-danger-muted-foreground",
   primary: "bg-primary-muted text-primary",
 };
 

@@ -52,30 +52,30 @@ function NavItemComponent({ item, collapsed }: NavItemComponentProps) {
       href={item.href}
       aria-current={item.isActive ? "page" : undefined}
       className={cn(
-        "flex items-center gap-3 rounded-lg px-3 text-sm font-medium transition-colors",
+        "relative flex items-center gap-3 rounded-lg px-3 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
         "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         item.isActive
-          ? "bg-sidebar-accent text-sidebar-accent-foreground"
-          : "text-sidebar-foreground",
+          ? "bg-sidebar-accent font-semibold text-sidebar-accent-foreground before:absolute before:inset-y-2 before:left-0 before:w-[3px] before:rounded-full before:bg-sidebar-primary"
+          : "font-medium text-sidebar-foreground",
         hasIcon ? "py-2.5" : "py-2 pl-4 text-[13px]",
-        collapsed && hasIcon && "justify-center px-0 w-11 h-11 relative"
+        collapsed && hasIcon && "justify-center px-0 w-11 h-11"
       )}
     >
       {hasIcon && IconComponent && (
-        <IconComponent className={cn("shrink-0", "h-[22px] w-[22px]")} />
+        <IconComponent className="h-4 w-4 shrink-0" />
       )}
       {!collapsed && (
         <>
           <span className="flex-1 truncate">{item.label}</span>
           {item.badge && !hasChildren && (
-            <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground">
+            <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary px-1.5 text-2xs font-semibold text-primary-foreground">
               {item.badge}
             </span>
           )}
         </>
       )}
       {collapsed && hasIcon && item.badge && (
-        <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-primary px-1 text-[9px] font-semibold text-primary-foreground">
+        <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-primary px-1 text-2xs font-semibold text-primary-foreground">
           {item.badge}
         </span>
       )}
@@ -88,20 +88,20 @@ function NavItemComponent({ item, collapsed }: NavItemComponentProps) {
         <CollapsibleTrigger asChild>
           <button
             className={cn(
-              "flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+              "relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring",
               "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
               item.isActive
-                ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                : "text-sidebar-foreground"
+                ? "bg-sidebar-accent font-semibold text-sidebar-accent-foreground before:absolute before:inset-y-2 before:left-0 before:w-[3px] before:rounded-full before:bg-sidebar-primary"
+                : "font-medium text-sidebar-foreground"
             )}
           >
             {hasIcon && IconComponent && (
-              <IconComponent className="h-[22px] w-[22px] shrink-0" />
+              <IconComponent className="h-4 w-4 shrink-0" />
             )}
             <span className="flex-1 text-left truncate">{item.label}</span>
             <ChevronDown
               className={cn(
-                "h-4 w-4 transition-transform text-sidebar-foreground/60",
+                "h-4 w-4 transition-transform text-sidebar-muted",
                 childrenOpen && "rotate-180"
               )}
             />
@@ -125,7 +125,7 @@ function NavItemComponent({ item, collapsed }: NavItemComponentProps) {
         <TooltipContent side="right" sideOffset={8} className="flex items-center gap-2 font-medium">
           {item.label}
           {item.badge && (
-            <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground">
+            <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary px-1.5 text-2xs font-semibold text-primary-foreground">
               {item.badge}
             </span>
           )}
@@ -148,7 +148,7 @@ function NavGroupComponent({ group, collapsed }: NavGroupComponentProps) {
   return (
     <div className="mb-2">
       {showLabel && !collapsed && (
-        <div className="px-3 py-2 text-xs font-medium uppercase tracking-wider text-sidebar-foreground/50">
+        <div className="px-3 py-2 text-xs font-medium uppercase tracking-wider text-sidebar-muted">
           {group.label}
         </div>
       )}
@@ -187,7 +187,7 @@ export function AppSidebar({
     <TooltipProvider delayDuration={0}>
       <aside
         className={cn(
-          "fixed left-0 top-0 z-40 hidden md:flex h-screen flex-col border-r border-sidebar-border bg-sidebar transition-all duration-200",
+          "fixed left-0 top-0 z-40 hidden md:flex h-screen flex-col border-r border-sidebar-border bg-sidebar transition-[width] duration-200 motion-reduce:transition-none",
           collapsed ? "w-sidebar-collapsed" : "w-sidebar",
           className
         )}
@@ -206,7 +206,7 @@ export function AppSidebar({
         <div className="border-t border-sidebar-border p-2 shrink-0">
           <button
             onClick={() => onCollapsedChange(!collapsed)}
-            className="flex w-full items-center justify-center rounded-lg p-2 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors"
+            className="flex w-full items-center justify-center rounded-lg p-2 text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
             aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           >
             {collapsed ? (

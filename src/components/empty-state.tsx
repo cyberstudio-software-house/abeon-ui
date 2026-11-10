@@ -6,6 +6,7 @@ import { LucideIcon } from "lucide-react";
 interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
   icon?: LucideIcon;
   title: string;
+  titleAs?: "h2" | "h3" | "h4";
   description?: string;
   action?: {
     label: string;
@@ -22,6 +23,7 @@ function EmptyState({
   className,
   icon: Icon,
   title,
+  titleAs: TitleTag = "h2",
   description,
   action,
   secondaryAction,
@@ -30,17 +32,15 @@ function EmptyState({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center py-16 px-4 text-center",
+        "flex flex-col items-center justify-center py-10 px-4 text-center",
         className
       )}
       {...props}
     >
       {Icon && (
-        <div className="mb-4 rounded-full bg-muted p-4">
-          <Icon className="h-8 w-8 text-muted-foreground" />
-        </div>
+        <Icon className="mb-4 h-8 w-8 text-muted-foreground" />
       )}
-      <h3 className="mb-2 text-lg font-semibold text-foreground">{title}</h3>
+      <TitleTag className="mb-2 text-base font-semibold text-foreground">{title}</TitleTag>
       {description && (
         <p className="mb-6 max-w-sm text-sm text-muted-foreground">{description}</p>
       )}

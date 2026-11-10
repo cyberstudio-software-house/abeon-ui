@@ -109,17 +109,17 @@ const notificationIcons: Record<NotificationType, React.ElementType> = {
 
 const notificationStyles: Record<NotificationType, { icon: string; bg: string; border: string }> = {
   success: {
-    icon: "text-success",
+    icon: "text-success-muted-foreground",
     bg: "bg-success/5",
     border: "border-success/20",
   },
   error: {
-    icon: "text-danger",
+    icon: "text-danger-muted-foreground",
     bg: "bg-danger/5",
     border: "border-danger/20",
   },
   warning: {
-    icon: "text-warning",
+    icon: "text-warning-muted-foreground",
     bg: "bg-warning/5",
     border: "border-warning/20",
   },
@@ -148,7 +148,7 @@ function NotificationItem({
   return (
     <div
       className={cn(
-        "relative flex gap-3 p-3 rounded-lg border animate-fade-in transition-all",
+        "relative flex gap-3 p-3 rounded-lg border animate-fade-in transition-colors",
         styles.bg,
         styles.border
       )}

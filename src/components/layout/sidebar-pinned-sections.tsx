@@ -285,10 +285,10 @@ function PinnedSectionBlock({
           />
         ) : (
           <>
-            <h3 className="flex min-w-0 items-center gap-1.5 px-1 text-xs font-medium uppercase tracking-wider text-foreground-muted">
+            <h2 className="flex min-w-0 items-center gap-1.5 px-1 text-xs font-medium uppercase tracking-wider text-foreground-muted">
               <Pin className="h-3 w-3 shrink-0" aria-hidden />
               <span className="truncate">{section.label}</span>
-            </h3>
+            </h2>
             <div className="flex-1" />
             {onRenameSection && (
               <button

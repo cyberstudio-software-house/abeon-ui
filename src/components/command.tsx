@@ -36,7 +36,7 @@ const CommandDialog = ({
 }: CommandDialogProps) => {
   return (
     <Dialog {...props}>
-      <DialogContent className="overflow-hidden p-0 shadow-lg">
+      <DialogContent className="overflow-hidden p-0 shadow-lg !animate-none" overlayClassName="!animate-none">
         {/* Radix requires a Title (and recommends a Description) on every
             DialogContent for screen readers. Visually hidden via `sr-only`. */}
         <DialogTitle className="sr-only">{title}</DialogTitle>

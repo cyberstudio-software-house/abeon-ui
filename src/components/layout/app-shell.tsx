@@ -41,11 +41,19 @@ export function AppShell({
 
   return (
     <div className={cn("min-h-screen bg-background", className)}>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-foreground focus:shadow-dropdown focus:outline-none focus:ring-2 focus:ring-ring"
+      >
+        Przejdź do treści
+      </a>
       {sidebar}
       {topbar}
       <main
+        id="main-content"
+        tabIndex={-1}
         className={cn(
-          "min-h-screen pt-topbar transition-all duration-200 overflow-x-hidden",
+          "min-h-screen pt-topbar transition-[margin-left,width] duration-200 motion-reduce:transition-none overflow-x-hidden focus:outline-none",
           "ml-0 md:ml-sidebar w-full md:w-[calc(100%-260px)]",
           collapsed && "md:ml-sidebar-collapsed md:w-[calc(100%-72px)]"
         )}
