@@ -1,5 +1,6 @@
 import * as React from "react";
 import { MoreHorizontal, Pencil } from "lucide-react";
+import { Button } from "./button";
 import { IconButton } from "./icon-button";
 import { TooltipProvider } from "./tooltip";
 import {
@@ -20,16 +21,17 @@ export interface RowAction {
 
 export interface RowActionsProps {
   /**
-   * The pencil. Pass `link` to render it as your router's link (it receives the icon as its
-   * child), or `onClick` for anything else.
+   * The main action, shown as a text button and repeated first in the menu. Pass `link` to
+   * render it as your router's link (it receives the label as its child), or `onClick` for
+   * anything else. `ariaLabel` names the record for screen readers, e.g. "Edytuj „O nas”".
    */
-  edit?: { label: string; onClick?: () => void; link?: React.ReactElement };
+  edit?: { label: string; ariaLabel?: string; onClick?: () => void; link?: React.ReactElement };
   /** Everything else, behind ⋯. A separator comes before the first `danger` entry. */
   actions?: RowAction[];
   moreLabel?: string;
 }
 
-/** The end of a record row: edit as an icon, the rest in a menu. */
+/** The end of a record row: the main action as a text button, the rest in a menu. */
 function RowActions({
   edit,
   actions = [],
@@ -45,23 +47,13 @@ function RowActions({
       <div className="flex shrink-0 items-center gap-0.5">
         {edit &&
           (edit.link ? (
-            <IconButton
-              asChild
-              size="sm"
-              tooltip={edit.label}
-              aria-label={edit.label}
-            >
-              {React.cloneElement(edit.link, {}, <Pencil />)}
-            </IconButton>
+            <Button asChild variant="ghost" size="sm" className="px-2">
+              {React.cloneElement(edit.link, { "aria-label": edit.ariaLabel } as React.HTMLAttributes<HTMLElement>, edit.label)}
+            </Button>
           ) : (
-            <IconButton
-              size="sm"
-              tooltip={edit.label}
-              aria-label={edit.label}
-              onClick={edit.onClick}
-            >
-              <Pencil />
-            </IconButton>
+            <Button variant="ghost" size="sm" className="px-2" aria-label={edit.ariaLabel} onClick={edit.onClick}>
+              {edit.label}
+            </Button>
           ))}
         {visible.length > 0 && (
           <DropdownMenu>
@@ -71,6 +63,21 @@ function RowActions({
               </IconButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-44">
+              {edit && (
+                <>
+                  {edit.link ? (
+                    <DropdownMenuItem asChild>
+                      {React.cloneElement(edit.link, {}, <><span className="mr-2 flex h-4 w-4 items-center [&>svg]:h-4 [&>svg]:w-4"><Pencil /></span>{edit.label}</>)}
+                    </DropdownMenuItem>
+                  ) : (
+                    <DropdownMenuItem onSelect={edit.onClick}>
+                      <span className="mr-2 flex h-4 w-4 items-center [&>svg]:h-4 [&>svg]:w-4"><Pencil /></span>
+                      {edit.label}
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                </>
+              )}
               {visible.map((action, index) => (
                 <React.Fragment key={action.label}>
                   {index === firstDanger && index > 0 && (
