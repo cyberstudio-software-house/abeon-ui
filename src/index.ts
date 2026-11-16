@@ -106,6 +106,10 @@ export type { IconPickerLabels, IconPickerProps } from "./components/icon-picker
 export { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "./components/input-otp";
 export { Input, SearchInput } from "./components/input";
 export { Field } from "./components/field";
+export { AccentPicker } from "./components/accent-picker";
+export type { AccentPickerProps } from "./components/accent-picker";
+export { ACCENTS, DEFAULT_ACCENT, applyAccent, isAccent } from "./lib/accent";
+export type { AccentName } from "./lib/accent";
 export type { FieldProps } from "./components/field";
 export { Label } from "./components/label";
 export { Menubar, MenubarCheckboxItem, MenubarContent, MenubarGroup, MenubarItem, MenubarLabel, MenubarMenu, MenubarPortal, MenubarRadioGroup, MenubarRadioItem, MenubarSeparator, MenubarShortcut, MenubarSub, MenubarSubContent, MenubarSubTrigger, MenubarTrigger } from "./components/menubar";

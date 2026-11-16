@@ -47,18 +47,18 @@ function RowActions({
       <div className="flex shrink-0 items-center gap-0.5">
         {edit &&
           (edit.link ? (
-            <Button asChild variant="ghost" size="sm" className="px-2">
+            <Button asChild variant="ghost" size="sm" className="px-2 text-primary hover:text-primary">
               {React.cloneElement(edit.link, { "aria-label": edit.ariaLabel } as React.HTMLAttributes<HTMLElement>, edit.label)}
             </Button>
           ) : (
-            <Button variant="ghost" size="sm" className="px-2" aria-label={edit.ariaLabel} onClick={edit.onClick}>
+            <Button variant="ghost" size="sm" className="px-2 text-primary hover:text-primary" aria-label={edit.ariaLabel} onClick={edit.onClick}>
               {edit.label}
             </Button>
           ))}
         {visible.length > 0 && (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <IconButton size="sm" aria-label={moreLabel}>
+              <IconButton size="sm" className="text-primary hover:text-primary" aria-label={moreLabel}>
                 <MoreHorizontal />
               </IconButton>
             </DropdownMenuTrigger>
