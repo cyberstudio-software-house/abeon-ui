@@ -361,6 +361,30 @@
   --chart-1: 21 88% 48%;
 }
 
+/* A thin, quiet scrollbar for panels such as the sidebar; follows the sidebar tokens, so theme and accent. */
+.scrollbar-subtle {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--sidebar-muted) / 0.35) transparent;
+  scrollbar-gutter: stable;
+}
+.scrollbar-subtle::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-subtle::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-subtle::-webkit-scrollbar-button {
+  display: none;
+}
+.scrollbar-subtle::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--sidebar-muted) / 0.35);
+  border-radius: 999px;
+}
+.scrollbar-subtle:hover::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--sidebar-muted) / 0.6);
+}
+
 body {
   font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
