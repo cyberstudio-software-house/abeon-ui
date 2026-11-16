@@ -23,7 +23,8 @@ const preset: Config = {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter Variable", "Inter", "system-ui", "sans-serif"],
+        sans: ['"Source Sans 3 Variable"', '"Source Sans 3"', "system-ui", "sans-serif"],
+        display: ['"Outfit Variable"', "Outfit", '"Source Sans 3 Variable"', "system-ui", "sans-serif"],
       },
       fontSize: {
         "2xs": ["11px", { lineHeight: "14px" }],

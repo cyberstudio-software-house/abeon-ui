@@ -1,4 +1,5 @@
 export const ACCENTS = [
+  { name: "cyberstudio", label: "Cyberstudio", swatch: "#1e149d" },
   { name: "indigo", label: "Indygo", swatch: "#4f46e5" },
   { name: "blue", label: "Niebieski", swatch: "#1d5fe0" },
   { name: "emerald", label: "Szmaragd", swatch: "#0f8a6b" },
@@ -9,7 +10,7 @@ export const ACCENTS = [
 
 export type AccentName = (typeof ACCENTS)[number]["name"];
 
-export const DEFAULT_ACCENT: AccentName = "indigo";
+export const DEFAULT_ACCENT: AccentName = "cyberstudio";
 
 export function isAccent(value: unknown): value is AccentName {
   return typeof value === "string" && ACCENTS.some((accent) => accent.name === value);

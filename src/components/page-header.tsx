@@ -22,7 +22,7 @@ const PageHeader = React.forwardRef<HTMLElement, PageHeaderProps>(
     >
       <div className="min-w-0 flex-1 basis-80 space-y-1">
         {back != null && <div>{back}</div>}
-        <TitleTag className="break-words text-balance text-2xl font-semibold text-foreground">{title}</TitleTag>
+        <TitleTag className="break-words text-balance font-display text-2xl font-semibold text-foreground">{title}</TitleTag>
         {description != null && (
           <div className="text-sm text-foreground-muted">{description}</div>
         )}

@@ -16,8 +16,8 @@ describe("applyAccent", () => {
     expect(document.documentElement.dataset.accent).toBe("emerald");
   });
 
-  it("falls back to indigo, which needs no attribute", () => {
-    expect(applyAccent("magenta", undefined)).toBe("indigo");
+  it("falls back to the Cyberstudio default, which needs no attribute", () => {
+    expect(applyAccent("magenta", undefined)).toBe("cyberstudio");
     expect(document.documentElement.dataset.accent).toBeUndefined();
   });
 });
@@ -33,9 +33,9 @@ describe("AccentPicker", () => {
   });
 
   it("has no inherit option for the organisation itself", () => {
-    render(<AccentPicker value="indigo" onChange={() => {}} />);
+    render(<AccentPicker value="cyberstudio" onChange={() => {}} />);
 
     expect(screen.queryByRole("radio", { name: "Jak organizacja" })).not.toBeInTheDocument();
-    expect(screen.getByRole("radio", { name: "Indygo" })).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("radio", { name: "Cyberstudio" })).toHaveAttribute("aria-checked", "true");
   });
 });

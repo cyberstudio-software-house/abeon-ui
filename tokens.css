@@ -1,24 +1,24 @@
 :root {
-  --background: 243 33% 97%;
-  --background-subtle: 220 15% 95%;
+  --background: 0 0% 97%;
+  --background-subtle: 240 10% 95%;
   --surface: 0 0% 100%;
   --surface-elevated: 0 0% 100%;
 
-  --foreground: 220 25% 10%;
-  --foreground-secondary: 220 15% 35%;
-  --foreground-muted: 220 10% 44%;
+  --foreground: 0 0% 8%;
+  --foreground-secondary: 237 20% 30%;
+  --foreground-muted: 237 10% 47%;
   --foreground-placeholder: 220 10% 65%;
 
-  --border: 243 30% 91%;
+  --border: 240 12% 89%;
   --border-strong: 220 15% 82%;
-  --border-focus: 243 75% 59%;
+  --border-focus: 186 80% 61%;
 
-  --primary: 243 75% 59%;
-  --primary-hover: 243 75% 54%;
-  --primary-active: 243 75% 49%;
+  --primary: 246 77% 35%;
+  --primary-hover: 246 77% 30%;
+  --primary-active: 246 77% 26%;
   --primary-foreground: 0 0% 100%;
-  --primary-muted: 243 75% 96%;
-  --primary-muted-foreground: 243 75% 40%;
+  --primary-muted: 246 70% 95%;
+  --primary-muted-foreground: 237 51% 34%;
 
   --secondary: 220 15% 94%;
   --secondary-hover: 220 15% 90%;
@@ -49,7 +49,7 @@
   --destructive-foreground: 0 0% 100%;
 
   --input: 220 12% 72%;
-  --ring: 243 75% 59%;
+  --ring: 186 80% 61%;
   --radius: 0.625rem;
 
   --shadow-color: 220 25% 10%;
@@ -61,17 +61,17 @@
   --popover: 0 0% 100%;
   --popover-foreground: 220 25% 10%;
 
-  --sidebar-background: 243 45% 21%;
-  --sidebar-foreground: 243 60% 86%;
-  --sidebar-primary: 243 75% 59%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 243 45% 29%;
+  --sidebar-background: 246 77% 35%;
+  --sidebar-foreground: 245 70% 92%;
+  --sidebar-primary: 186 80% 61%;
+  --sidebar-primary-foreground: 246 77% 35%;
+  --sidebar-accent: 246 65% 43%;
   --sidebar-accent-foreground: 0 0% 100%;
-  --sidebar-border: 243 45% 30%;
-  --sidebar-ring: 243 75% 69%;
-  --sidebar-muted: 243 32% 68%;
+  --sidebar-border: 246 60% 42%;
+  --sidebar-ring: 186 80% 61%;
+  --sidebar-muted: 245 58% 78%;
 
-  --chart-1: 243 75% 59%;
+  --chart-1: 246 77% 35%;
   --chart-2: 152 60% 40%;
   --chart-3: 38 95% 50%;
   --chart-4: 190 70% 40%;
@@ -79,8 +79,8 @@
 }
 
 .dark {
-  --background: 243 25% 8%;
-  --background-subtle: 220 25% 10%;
+  --background: 244 59% 8%;
+  --background-subtle: 244 45% 10%;
   --surface: 220 25% 12%;
   --surface-elevated: 220 25% 14%;
 
@@ -89,16 +89,16 @@
   --foreground-muted: 220 10% 58%;
   --foreground-placeholder: 220 10% 40%;
 
-  --border: 243 20% 20%;
+  --border: 244 30% 22%;
   --border-strong: 220 20% 28%;
-  --border-focus: 243 75% 60%;
+  --border-focus: 186 75% 55%;
 
-  --primary: 243 75% 60%;
-  --primary-hover: 243 75% 56%;
-  --primary-active: 243 75% 52%;
+  --primary: 246 70% 62%;
+  --primary-hover: 246 70% 58%;
+  --primary-active: 246 70% 54%;
   --primary-foreground: 0 0% 100%;
-  --primary-muted: 243 40% 16%;
-  --primary-muted-foreground: 243 75% 78%;
+  --primary-muted: 246 45% 18%;
+  --primary-muted-foreground: 246 80% 82%;
 
   --secondary: 220 20% 18%;
   --secondary-hover: 220 20% 22%;
@@ -122,7 +122,7 @@
   --destructive: 0 70% 56%;
 
   --input: 220 15% 32%;
-  --ring: 243 75% 60%;
+  --ring: 186 75% 55%;
 
   --shadow-color: 0 0% 0%;
   --shadow-strength: 2;
@@ -133,18 +133,62 @@
   --popover: 220 25% 12%;
   --popover-foreground: 220 15% 95%;
 
-  --sidebar-background: 243 30% 7%;
-  --sidebar-foreground: 243 20% 76%;
-  --sidebar-primary: 243 75% 60%;
-  --sidebar-accent: 243 25% 14%;
-  --sidebar-accent-foreground: 243 15% 95%;
-  --sidebar-border: 243 25% 14%;
-  --sidebar-ring: 243 75% 70%;
-  --sidebar-muted: 243 12% 56%;
-  --chart-1: 243 75% 60%;
+  --sidebar-background: 244 77% 20%;
+  --sidebar-foreground: 245 60% 88%;
+  --sidebar-primary: 186 75% 58%;
+  --sidebar-accent: 245 55% 27%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-border: 245 55% 27%;
+  --sidebar-ring: 186 75% 58%;
+  --sidebar-muted: 245 35% 66%;
+  --chart-1: 246 70% 62%;
+  --sidebar-primary-foreground: 246 77% 20%;
 }
 
-/* Accent palette (organisation or user choice): set data-accent on <html>; indigo is the default above. */
+/* Accent palette (organisation or user choice): set data-accent on <html>; Cyberstudio is the default above. */
+[data-accent="indigo"] {
+  --background: 243 33% 97%;
+  --border: 243 30% 91%;
+  --border-focus: 243 75% 59%;
+  --ring: 243 75% 59%;
+  --primary: 243 75% 59%;
+  --primary-hover: 243 75% 54%;
+  --primary-active: 243 75% 49%;
+  --primary-muted: 243 75% 96%;
+  --primary-muted-foreground: 243 75% 40%;
+  --sidebar-background: 243 45% 21%;
+  --sidebar-foreground: 243 60% 86%;
+  --sidebar-muted: 243 32% 68%;
+  --sidebar-border: 243 45% 30%;
+  --sidebar-accent: 243 45% 29%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-primary: 243 75% 59%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-ring: 243 75% 69%;
+  --chart-1: 243 75% 59%;
+}
+.dark[data-accent="indigo"],
+[data-accent="indigo"] .dark {
+  --background: 243 25% 8%;
+  --border: 243 20% 20%;
+  --border-focus: 243 75% 60%;
+  --ring: 243 75% 60%;
+  --primary: 243 75% 60%;
+  --primary-hover: 243 75% 56%;
+  --primary-active: 243 75% 52%;
+  --primary-muted: 243 40% 16%;
+  --primary-muted-foreground: 243 75% 78%;
+  --sidebar-background: 243 30% 7%;
+  --sidebar-foreground: 243 20% 76%;
+  --sidebar-muted: 243 12% 56%;
+  --sidebar-border: 243 25% 14%;
+  --sidebar-accent: 243 25% 14%;
+  --sidebar-accent-foreground: 243 15% 95%;
+  --sidebar-primary: 243 75% 60%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-ring: 243 75% 70%;
+  --chart-1: 243 75% 60%;
+}
 [data-accent="blue"] {
   --background: 221 33% 97%;
   --border: 221 30% 91%;
@@ -153,7 +197,6 @@
   --primary: 221 83% 50%;
   --primary-hover: 221 83% 45%;
   --primary-active: 221 83% 40%;
-  --primary-foreground: 0 0% 100%;
   --primary-muted: 221 83% 96%;
   --primary-muted-foreground: 221 83% 31%;
   --sidebar-background: 221 50% 18%;
@@ -185,6 +228,7 @@
   --sidebar-accent: 221 25% 14%;
   --sidebar-accent-foreground: 221 15% 95%;
   --sidebar-primary: 221 83% 54%;
+  --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-ring: 221 83% 64%;
   --chart-1: 221 83% 54%;
 }
@@ -196,7 +240,6 @@
   --primary: 162 80% 30%;
   --primary-hover: 162 80% 25%;
   --primary-active: 162 80% 20%;
-  --primary-foreground: 0 0% 100%;
   --primary-muted: 162 80% 96%;
   --primary-muted-foreground: 162 80% 22%;
   --sidebar-background: 162 55% 14%;
@@ -228,6 +271,7 @@
   --sidebar-accent: 162 25% 14%;
   --sidebar-accent-foreground: 162 15% 95%;
   --sidebar-primary: 162 80% 34%;
+  --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-ring: 162 80% 44%;
   --chart-1: 162 80% 34%;
 }
@@ -239,7 +283,6 @@
   --primary: 262 72% 56%;
   --primary-hover: 262 72% 51%;
   --primary-active: 262 72% 46%;
-  --primary-foreground: 0 0% 100%;
   --primary-muted: 262 72% 96%;
   --primary-muted-foreground: 262 72% 37%;
   --sidebar-background: 262 45% 20%;
@@ -271,6 +314,7 @@
   --sidebar-accent: 262 25% 14%;
   --sidebar-accent-foreground: 262 15% 95%;
   --sidebar-primary: 262 72% 60%;
+  --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-ring: 262 72% 70%;
   --chart-1: 262 72% 60%;
 }
@@ -282,7 +326,6 @@
   --primary: 346 72% 48%;
   --primary-hover: 346 72% 43%;
   --primary-active: 346 72% 38%;
-  --primary-foreground: 0 0% 100%;
   --primary-muted: 346 72% 96%;
   --primary-muted-foreground: 346 72% 29%;
   --sidebar-background: 346 45% 18%;
@@ -314,6 +357,7 @@
   --sidebar-accent: 346 25% 14%;
   --sidebar-accent-foreground: 346 15% 95%;
   --sidebar-primary: 346 72% 52%;
+  --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-ring: 346 72% 62%;
   --chart-1: 346 72% 52%;
 }
@@ -325,7 +369,6 @@
   --primary: 21 88% 44%;
   --primary-hover: 21 88% 39%;
   --primary-active: 21 88% 34%;
-  --primary-foreground: 0 0% 100%;
   --primary-muted: 21 88% 96%;
   --primary-muted-foreground: 21 88% 25%;
   --sidebar-background: 21 35% 16%;
@@ -357,6 +400,7 @@
   --sidebar-accent: 21 25% 14%;
   --sidebar-accent-foreground: 21 15% 95%;
   --sidebar-primary: 21 88% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-ring: 21 88% 58%;
   --chart-1: 21 88% 48%;
 }
