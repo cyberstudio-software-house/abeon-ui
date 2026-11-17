@@ -297,7 +297,7 @@ function A4PageView({ editor, zoom }: { editor: Editor; zoom: number }) {
             }}
           >
             {/* Page number */}
-            <div className="absolute bottom-3 right-4 text-[10px] text-muted-foreground/50 select-none">
+            <div className="absolute bottom-3 right-4 text-2xs text-muted-foreground/50 select-none">
               {i + 1} / {pageCount}
             </div>
             <div

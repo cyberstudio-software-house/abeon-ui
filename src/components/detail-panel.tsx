@@ -218,7 +218,7 @@ export function DetailMetric({
     <div className={className}>
       <p className="text-xs text-foreground-muted">{label}</p>
       <p className={cn("text-lg font-semibold", valueClass)}>{value}</p>
-      {hint && <p className="text-[10px] text-foreground-muted">{hint}</p>}
+      {hint && <p className="text-2xs text-foreground-muted">{hint}</p>}
       {trend && (
         <div className="mt-1 text-xs">
           {trend.direction === "up" && (

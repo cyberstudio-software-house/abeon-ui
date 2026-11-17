@@ -231,7 +231,7 @@ export function Topbar({
               if (categoryApps.length === 0) return null;
               return (
                 <div key={category.label} className="mb-3 last:mb-0">
-                  <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wider px-1 mb-1.5">
+                  <p className="text-2xs font-semibold text-muted-foreground uppercase tracking-wider px-1 mb-1.5">
                     {category.label}
                   </p>
                   <div className="grid grid-cols-2 gap-1">
@@ -260,7 +260,7 @@ export function Topbar({
                           </div>
                           <div className="min-w-0">
                             <p className="text-sm font-medium leading-tight truncate">{app.name}</p>
-                            <p className="text-[11px] text-muted-foreground leading-tight truncate">
+                            <p className="text-2xs text-muted-foreground leading-tight truncate">
                               {app.description}
                             </p>
                           </div>
@@ -283,7 +283,7 @@ export function Topbar({
           >
             <Bell className="h-4 w-4" />
             {unreadCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-danger px-1 text-[10px] font-semibold text-danger-foreground">
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-danger px-1 text-2xs font-semibold text-danger-foreground">
                 {unreadCount > 99 ? "99+" : unreadCount}
               </span>
             )}
@@ -327,7 +327,7 @@ export function Topbar({
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium">{notification.title}</p>
                       <p className="text-xs text-muted-foreground truncate">{notification.message}</p>
-                      <p className="text-[10px] text-muted-foreground mt-1 flex items-center gap-1">
+                      <p className="text-2xs text-muted-foreground mt-1 flex items-center gap-1">
                         <Clock className="h-2.5 w-2.5" />
                         {notification.time}
                       </p>

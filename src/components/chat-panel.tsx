@@ -104,7 +104,7 @@ export function ChatPanel({
         </div>
         <div>
           <p className="font-semibold text-sm">{t.title}</p>
-          <p className="text-[11px] text-foreground-muted">{t.subtitle}</p>
+          <p className="text-2xs text-foreground-muted">{t.subtitle}</p>
         </div>
       </div>
     ) : (

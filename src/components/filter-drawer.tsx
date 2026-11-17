@@ -103,7 +103,7 @@ export function FilterDrawer({
             <Filter className="h-4 w-4" />
             {t.triggerLabel}
             {activeFiltersCount > 0 && (
-              <span className="ml-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary px-1.5 text-[10px] font-semibold text-primary-foreground">
+              <span className="ml-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-primary px-1.5 text-2xs font-semibold text-primary-foreground">
                 {activeFiltersCount}
               </span>
             )}

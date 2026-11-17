@@ -105,7 +105,7 @@ export function AppSwitcher({
                         </div>
                         <div className="min-w-0">
                           <p className="text-sm font-medium leading-tight truncate">{app.name}</p>
-                          <p className="text-[11px] text-foreground-muted leading-tight truncate">
+                          <p className="text-2xs text-foreground-muted leading-tight truncate">
                             {app.description}
                           </p>
                         </div>
