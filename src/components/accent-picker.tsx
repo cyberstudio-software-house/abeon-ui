@@ -19,20 +19,44 @@ function AccentPicker({ value, onChange, inheritLabel, label = "Profil motywu", 
     ...(inheritLabel ? [{ name: null, label: inheritLabel }] : []),
     ...ACCENTS.map((accent) => ({ name: accent.name, label: accent.label, preview: accent.preview })),
   ];
+  const refs = React.useRef<(HTMLButtonElement | null)[]>([]);
+  const checkedIndex = options.findIndex((option) => option.name === value);
+  const tabbable = checkedIndex < 0 ? 0 : checkedIndex;
+
+  const onKeyDown = (event: React.KeyboardEvent, index: number) => {
+    const last = options.length - 1;
+    const next = {
+      ArrowRight: index === last ? 0 : index + 1,
+      ArrowDown: index === last ? 0 : index + 1,
+      ArrowLeft: index === 0 ? last : index - 1,
+      ArrowUp: index === 0 ? last : index - 1,
+      Home: 0,
+      End: last,
+    }[event.key];
+    if (next === undefined) return;
+    event.preventDefault();
+    refs.current[next]?.focus();
+    onChange(options[next].name);
+  };
 
   return (
-    <div role="radiogroup" aria-label={label} className={cn("flex flex-wrap gap-2", className)}>
-      {options.map((option) => {
+    <div role="radiogroup" aria-label={label} aria-disabled={disabled || undefined} className={cn("flex flex-wrap gap-2", className)}>
+      {options.map((option, index) => {
         const checked = option.name === value;
         return (
           <button
             key={option.name ?? "inherit"}
+            ref={(element) => {
+              refs.current[index] = element;
+            }}
             type="button"
             role="radio"
             aria-checked={checked}
             aria-label={option.label}
+            tabIndex={index === tabbable ? 0 : -1}
             disabled={disabled}
             onClick={() => onChange(option.name)}
+            onKeyDown={(event) => onKeyDown(event, index)}
             className={cn(
               "relative flex w-28 flex-col gap-1.5 rounded-lg border p-2 text-left text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50",
               checked ? "border-primary bg-primary-muted text-primary-muted-foreground" : "border-border bg-background hover:bg-accent",

@@ -38,4 +38,43 @@ describe("AccentPicker", () => {
     expect(screen.queryByRole("radio", { name: "Jak organizacja" })).not.toBeInTheDocument();
     expect(screen.getByRole("radio", { name: "Granat + turkus" })).toHaveAttribute("aria-checked", "true");
   });
+
+  it("is one tab stop: only the checked tile, or the first one, is tabbable", () => {
+    const { rerender } = render(<AccentPicker value="emerald" onChange={() => {}} inheritLabel="Jak organizacja" />);
+    const tabbable = () => screen.getAllByRole("radio").filter((radio) => radio.tabIndex === 0);
+
+    expect(tabbable().map((radio) => radio.getAttribute("aria-label"))).toEqual(["Las + mięta"]);
+
+    rerender(<AccentPicker value={null} onChange={() => {}} />);
+    expect(tabbable().map((radio) => radio.getAttribute("aria-label"))).toEqual(["Granat + turkus"]);
+  });
+
+  it("moves and selects with arrows, wrapping, and jumps with Home and End", () => {
+    const onChange = vi.fn();
+    render(<AccentPicker value="cyberstudio" onChange={onChange} inheritLabel="Jak organizacja" />);
+    const radios = screen.getAllByRole("radio");
+    const current = screen.getByRole("radio", { name: "Granat + turkus" });
+
+    fireEvent.keyDown(current, { key: "ArrowRight" });
+    expect(onChange).toHaveBeenLastCalledWith("graphite");
+    expect(radios[2]).toHaveFocus();
+
+    fireEvent.keyDown(current, { key: "ArrowUp" });
+    expect(onChange).toHaveBeenLastCalledWith(null);
+
+    fireEvent.keyDown(radios[0], { key: "ArrowLeft" });
+    expect(onChange).toHaveBeenLastCalledWith("orange");
+
+    fireEvent.keyDown(radios[0], { key: "End" });
+    expect(onChange).toHaveBeenLastCalledWith("orange");
+    expect(radios[radios.length - 1]).toHaveFocus();
+
+    fireEvent.keyDown(current, { key: "Home" });
+    expect(onChange).toHaveBeenLastCalledWith(null);
+    expect(radios[0]).toHaveFocus();
+
+    onChange.mockClear();
+    fireEvent.keyDown(current, { key: "a" });
+    expect(onChange).not.toHaveBeenCalled();
+  });
 });
