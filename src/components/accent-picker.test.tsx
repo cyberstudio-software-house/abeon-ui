@@ -28,7 +28,7 @@ describe("AccentPicker", () => {
     render(<AccentPicker value={null} onChange={onChange} inheritLabel="Jak organizacja" />);
 
     expect(screen.getByRole("radio", { name: "Jak organizacja" })).toHaveAttribute("aria-checked", "true");
-    fireEvent.click(screen.getByRole("radio", { name: "Szmaragd" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Las + mięta" }));
     expect(onChange).toHaveBeenCalledWith("emerald");
   });
 
@@ -36,6 +36,6 @@ describe("AccentPicker", () => {
     render(<AccentPicker value="cyberstudio" onChange={() => {}} />);
 
     expect(screen.queryByRole("radio", { name: "Jak organizacja" })).not.toBeInTheDocument();
-    expect(screen.getByRole("radio", { name: "Cyberstudio" })).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("radio", { name: "Granat + turkus" })).toHaveAttribute("aria-checked", "true");
   });
 });
